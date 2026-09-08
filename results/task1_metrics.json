@@ -1,0 +1,9 @@
+{
+  "task": "task1_bert_tag_classifier",
+  "dataset": "MusicCaps captions",
+  "num_test_examples": 250,
+  "num_tags": 30,
+  "macro_f1": 0.5661122002302914,
+  "micro_f1": 0.594409024031388,
+  "auc_pr_macro": 0.7555439847466344
+}

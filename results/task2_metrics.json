@@ -1,0 +1,15 @@
+{
+  "dataset": "GTZAN",
+  "gnn": {
+    "accuracy": 0.62,
+    "macro_f1": 0.6155417772191966,
+    "micro_f1": 0.62,
+    "num_test_examples": 150
+  },
+  "cnn_baseline": {
+    "accuracy": 0.78,
+    "macro_f1": 0.7621019066625296,
+    "micro_f1": 0.78,
+    "num_test_examples": 150
+  }
+}

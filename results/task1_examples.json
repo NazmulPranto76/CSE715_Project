@@ -1,0 +1,77 @@
+[
+  {
+    "text": "This children's song features a male voice singing the main melody. This is accompanied by male and female voices singing backing vocals in harmony. This has a call and response technique where the main voice sings a line followed by the response by the choir. This is accompanied by percussion playing a simple beat. After two bars, the instruments pause. The bass plays the root notes of the chords and sliding to a pause at the end of the bar. During the pause, the voices continue to sing. The main voice sings two lines and the choir sings the third line with the main voice in harmony. The mood of this song is happy. After the pause, the singers return to singing the same melody. This song can be played in an educational movie for children.",
+    "true_tags": [
+      "male voice"
+    ],
+    "predicted_tags": [
+      "slow tempo",
+      "piano",
+      "male voice",
+      "moderate tempo"
+    ]
+  },
+  {
+    "text": "The Low quality recording features a reverberant female vocal singing beautiful melodies over widely spread acoustic rhythm guitars chord progressions. It sounds passionate and emotional thanks to that female vocal.",
+    "true_tags": [
+      "low quality",
+      "passionate",
+      "emotional"
+    ],
+    "predicted_tags": [
+      "low quality",
+      "emotional",
+      "noisy",
+      "passionate"
+    ]
+  },
+  {
+    "text": "The low quality recording features a live performance of a traditional song and it consists of an echoing female vocal singing over breathy woodwind melody and arpeggiated plucked string melody. It sounds passionate, soulful and mystical, even though the recording is noisy.",
+    "true_tags": [
+      "low quality",
+      "passionate",
+      "noisy"
+    ],
+    "predicted_tags": [
+      "low quality",
+      "emotional",
+      "noisy",
+      "passionate",
+      "live performance",
+      "mono"
+    ]
+  },
+  {
+    "text": "This is an instrumental piece from a soap opera soundtrack. The violin and the acoustic guitar are playing a mellow tune while there is an occasional piano tune in the background. The rhythm is kept by a very quiet acoustic drum beat. The atmosphere is gentle and romantic. This piece could be used in the soundtrack of romance movies where the characters are having a good time in the presence of each other.",
+    "true_tags": [
+      "instrumental",
+      "acoustic guitar",
+      "piano",
+      "acoustic drums",
+      "emotional"
+    ],
+    "predicted_tags": [
+      "instrumental",
+      "emotional",
+      "slow tempo",
+      "acoustic guitar",
+      "piano"
+    ]
+  },
+  {
+    "text": "This clip is an instrumental. The tempo is slow with the sound of an acoustic guitar being tuned. This is a tutorial on how to tune a guitar.",
+    "true_tags": [
+      "instrumental",
+      "acoustic guitar"
+    ],
+    "predicted_tags": [
+      "instrumental",
+      "amateur recording",
+      "slow tempo",
+      "electric guitar",
+      "acoustic guitar",
+      "male voice",
+      "moderate tempo"
+    ]
+  }
+]

@@ -1,0 +1,1052 @@
+[
+  {
+    "track_id": "classical.00027",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00027.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00027.wav"
+  },
+  {
+    "track_id": "metal.00018",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00018.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00018.wav"
+  },
+  {
+    "track_id": "blues.00052",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00052.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00052.wav"
+  },
+  {
+    "track_id": "blues.00037",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00037.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00037.wav"
+  },
+  {
+    "track_id": "pop.00085",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00085.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00085.wav"
+  },
+  {
+    "track_id": "blues.00074",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00074.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00074.wav"
+  },
+  {
+    "track_id": "blues.00029",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00029.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00029.wav"
+  },
+  {
+    "track_id": "reggae.00055",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00055.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00055.wav"
+  },
+  {
+    "track_id": "jazz.00073",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00073.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00073.wav"
+  },
+  {
+    "track_id": "disco.00097",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00097.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00097.wav"
+  },
+  {
+    "track_id": "disco.00020",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00020.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00020.wav"
+  },
+  {
+    "track_id": "disco.00063",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00063.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00063.wav"
+  },
+  {
+    "track_id": "jazz.00033",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00033.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00033.wav"
+  },
+  {
+    "track_id": "metal.00098",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00098.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00098.wav"
+  },
+  {
+    "track_id": "classical.00032",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00032.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00032.wav"
+  },
+  {
+    "track_id": "disco.00007",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00007.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00007.wav"
+  },
+  {
+    "track_id": "reggae.00066",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00066.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00066.wav"
+  },
+  {
+    "track_id": "classical.00022",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00022.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00022.wav"
+  },
+  {
+    "track_id": "rock.00092",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00092.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00092.wav"
+  },
+  {
+    "track_id": "rock.00020",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00020.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00020.wav"
+  },
+  {
+    "track_id": "metal.00012",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00012.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00012.wav"
+  },
+  {
+    "track_id": "country.00037",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00037.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00037.wav"
+  },
+  {
+    "track_id": "metal.00053",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00053.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00053.wav"
+  },
+  {
+    "track_id": "reggae.00003",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00003.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00003.wav"
+  },
+  {
+    "track_id": "classical.00033",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00033.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00033.wav"
+  },
+  {
+    "track_id": "blues.00082",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00082.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00082.wav"
+  },
+  {
+    "track_id": "disco.00092",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00092.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00092.wav"
+  },
+  {
+    "track_id": "reggae.00015",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00015.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00015.wav"
+  },
+  {
+    "track_id": "reggae.00086",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00086.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00086.wav"
+  },
+  {
+    "track_id": "hiphop.00015",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00015.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00015.wav"
+  },
+  {
+    "track_id": "rock.00063",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00063.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00063.wav"
+  },
+  {
+    "track_id": "disco.00029",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00029.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00029.wav"
+  },
+  {
+    "track_id": "rock.00003",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00003.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00003.wav"
+  },
+  {
+    "track_id": "jazz.00035",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00035.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00035.wav"
+  },
+  {
+    "track_id": "classical.00043",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00043.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00043.wav"
+  },
+  {
+    "track_id": "reggae.00024",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00024.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00024.wav"
+  },
+  {
+    "track_id": "disco.00060",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00060.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00060.wav"
+  },
+  {
+    "track_id": "rock.00005",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00005.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00005.wav"
+  },
+  {
+    "track_id": "metal.00044",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00044.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00044.wav"
+  },
+  {
+    "track_id": "rock.00069",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00069.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00069.wav"
+  },
+  {
+    "track_id": "disco.00021",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00021.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00021.wav"
+  },
+  {
+    "track_id": "classical.00072",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00072.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00072.wav"
+  },
+  {
+    "track_id": "country.00055",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00055.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00055.wav"
+  },
+  {
+    "track_id": "jazz.00089",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00089.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00089.wav"
+  },
+  {
+    "track_id": "classical.00071",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00071.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00071.wav"
+  },
+  {
+    "track_id": "metal.00019",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00019.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00019.wav"
+  },
+  {
+    "track_id": "reggae.00094",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00094.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00094.wav"
+  },
+  {
+    "track_id": "rock.00021",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00021.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00021.wav"
+  },
+  {
+    "track_id": "jazz.00074",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00074.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00074.wav"
+  },
+  {
+    "track_id": "hiphop.00051",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00051.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00051.wav"
+  },
+  {
+    "track_id": "country.00016",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00016.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00016.wav"
+  },
+  {
+    "track_id": "pop.00025",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00025.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00025.wav"
+  },
+  {
+    "track_id": "disco.00026",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00026.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00026.wav"
+  },
+  {
+    "track_id": "pop.00032",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00032.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00032.wav"
+  },
+  {
+    "track_id": "hiphop.00018",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00018.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00018.wav"
+  },
+  {
+    "track_id": "rock.00051",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00051.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00051.wav"
+  },
+  {
+    "track_id": "disco.00053",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00053.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00053.wav"
+  },
+  {
+    "track_id": "rock.00055",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00055.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00055.wav"
+  },
+  {
+    "track_id": "classical.00004",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00004.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00004.wav"
+  },
+  {
+    "track_id": "reggae.00074",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00074.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00074.wav"
+  },
+  {
+    "track_id": "pop.00076",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00076.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00076.wav"
+  },
+  {
+    "track_id": "hiphop.00039",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00039.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00039.wav"
+  },
+  {
+    "track_id": "hiphop.00099",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00099.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00099.wav"
+  },
+  {
+    "track_id": "blues.00002",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00002.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00002.wav"
+  },
+  {
+    "track_id": "pop.00062",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00062.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00062.wav"
+  },
+  {
+    "track_id": "jazz.00028",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00028.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00028.wav"
+  },
+  {
+    "track_id": "hiphop.00022",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00022.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00022.wav"
+  },
+  {
+    "track_id": "rock.00095",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00095.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00095.wav"
+  },
+  {
+    "track_id": "pop.00026",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00026.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00026.wav"
+  },
+  {
+    "track_id": "reggae.00042",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00042.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00042.wav"
+  },
+  {
+    "track_id": "country.00001",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00001.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00001.wav"
+  },
+  {
+    "track_id": "disco.00027",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00027.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00027.wav"
+  },
+  {
+    "track_id": "hiphop.00098",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00098.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00098.wav"
+  },
+  {
+    "track_id": "metal.00066",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00066.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00066.wav"
+  },
+  {
+    "track_id": "rock.00052",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00052.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00052.wav"
+  },
+  {
+    "track_id": "pop.00096",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00096.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00096.wav"
+  },
+  {
+    "track_id": "hiphop.00057",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00057.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00057.wav"
+  },
+  {
+    "track_id": "disco.00037",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00037.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00037.wav"
+  },
+  {
+    "track_id": "jazz.00058",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00058.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00058.wav"
+  },
+  {
+    "track_id": "jazz.00068",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00068.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00068.wav"
+  },
+  {
+    "track_id": "country.00052",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00052.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00052.wav"
+  },
+  {
+    "track_id": "reggae.00022",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00022.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00022.wav"
+  },
+  {
+    "track_id": "classical.00047",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00047.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00047.wav"
+  },
+  {
+    "track_id": "rock.00025",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00025.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00025.wav"
+  },
+  {
+    "track_id": "blues.00063",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00063.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00063.wav"
+  },
+  {
+    "track_id": "reggae.00054",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00054.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00054.wav"
+  },
+  {
+    "track_id": "metal.00057",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00057.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00057.wav"
+  },
+  {
+    "track_id": "hiphop.00054",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00054.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00054.wav"
+  },
+  {
+    "track_id": "jazz.00020",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00020.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00020.wav"
+  },
+  {
+    "track_id": "pop.00048",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00048.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00048.wav"
+  },
+  {
+    "track_id": "hiphop.00016",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00016.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00016.wav"
+  },
+  {
+    "track_id": "blues.00023",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00023.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00023.wav"
+  },
+  {
+    "track_id": "blues.00087",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00087.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00087.wav"
+  },
+  {
+    "track_id": "country.00023",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00023.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00023.wav"
+  },
+  {
+    "track_id": "disco.00068",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00068.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00068.wav"
+  },
+  {
+    "track_id": "classical.00011",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00011.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00011.wav"
+  },
+  {
+    "track_id": "country.00018",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00018.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00018.wav"
+  },
+  {
+    "track_id": "country.00054",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00054.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00054.wav"
+  },
+  {
+    "track_id": "disco.00050",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00050.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00050.wav"
+  },
+  {
+    "track_id": "jazz.00023",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00023.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00023.wav"
+  },
+  {
+    "track_id": "rock.00087",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00087.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00087.wav"
+  },
+  {
+    "track_id": "hiphop.00092",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00092.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00092.wav"
+  },
+  {
+    "track_id": "blues.00095",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00095.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00095.wav"
+  },
+  {
+    "track_id": "metal.00038",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00038.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00038.wav"
+  },
+  {
+    "track_id": "country.00074",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00074.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00074.wav"
+  },
+  {
+    "track_id": "rock.00058",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00058.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00058.wav"
+  },
+  {
+    "track_id": "classical.00040",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00040.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00040.wav"
+  },
+  {
+    "track_id": "pop.00084",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00084.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00084.wav"
+  },
+  {
+    "track_id": "classical.00036",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00036.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00036.wav"
+  },
+  {
+    "track_id": "hiphop.00012",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00012.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00012.wav"
+  },
+  {
+    "track_id": "rock.00032",
+    "genre": "rock",
+    "genre_idx": 9,
+    "graph_path": "data/processed/graphs/rock.00032.pt",
+    "audio_path": "data/raw/gtzan/genres_original/rock/rock.00032.wav"
+  },
+  {
+    "track_id": "reggae.00007",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00007.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00007.wav"
+  },
+  {
+    "track_id": "jazz.00075",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00075.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00075.wav"
+  },
+  {
+    "track_id": "jazz.00090",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00090.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00090.wav"
+  },
+  {
+    "track_id": "metal.00060",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00060.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00060.wav"
+  },
+  {
+    "track_id": "reggae.00098",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00098.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00098.wav"
+  },
+  {
+    "track_id": "pop.00088",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00088.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00088.wav"
+  },
+  {
+    "track_id": "disco.00085",
+    "genre": "disco",
+    "genre_idx": 3,
+    "graph_path": "data/processed/graphs/disco.00085.pt",
+    "audio_path": "data/raw/gtzan/genres_original/disco/disco.00085.wav"
+  },
+  {
+    "track_id": "pop.00017",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00017.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00017.wav"
+  },
+  {
+    "track_id": "hiphop.00061",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00061.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00061.wav"
+  },
+  {
+    "track_id": "country.00089",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00089.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00089.wav"
+  },
+  {
+    "track_id": "pop.00058",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00058.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00058.wav"
+  },
+  {
+    "track_id": "country.00094",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00094.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00094.wav"
+  },
+  {
+    "track_id": "hiphop.00029",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00029.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00029.wav"
+  },
+  {
+    "track_id": "country.00067",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00067.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00067.wav"
+  },
+  {
+    "track_id": "pop.00064",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00064.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00064.wav"
+  },
+  {
+    "track_id": "blues.00090",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00090.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00090.wav"
+  },
+  {
+    "track_id": "jazz.00009",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00009.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00009.wav"
+  },
+  {
+    "track_id": "blues.00086",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00086.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00086.wav"
+  },
+  {
+    "track_id": "country.00043",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00043.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00043.wav"
+  },
+  {
+    "track_id": "jazz.00006",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00006.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00006.wav"
+  },
+  {
+    "track_id": "metal.00090",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00090.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00090.wav"
+  },
+  {
+    "track_id": "blues.00021",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00021.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00021.wav"
+  },
+  {
+    "track_id": "classical.00006",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00006.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00006.wav"
+  },
+  {
+    "track_id": "metal.00073",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00073.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00073.wav"
+  },
+  {
+    "track_id": "classical.00099",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00099.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00099.wav"
+  },
+  {
+    "track_id": "country.00031",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00031.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00031.wav"
+  },
+  {
+    "track_id": "classical.00061",
+    "genre": "classical",
+    "genre_idx": 1,
+    "graph_path": "data/processed/graphs/classical.00061.pt",
+    "audio_path": "data/raw/gtzan/genres_original/classical/classical.00061.wav"
+  },
+  {
+    "track_id": "reggae.00079",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00079.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00079.wav"
+  },
+  {
+    "track_id": "blues.00097",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00097.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00097.wav"
+  },
+  {
+    "track_id": "reggae.00090",
+    "genre": "reggae",
+    "genre_idx": 8,
+    "graph_path": "data/processed/graphs/reggae.00090.pt",
+    "audio_path": "data/raw/gtzan/genres_original/reggae/reggae.00090.wav"
+  },
+  {
+    "track_id": "pop.00010",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00010.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00010.wav"
+  },
+  {
+    "track_id": "country.00069",
+    "genre": "country",
+    "genre_idx": 2,
+    "graph_path": "data/processed/graphs/country.00069.pt",
+    "audio_path": "data/raw/gtzan/genres_original/country/country.00069.wav"
+  },
+  {
+    "track_id": "blues.00001",
+    "genre": "blues",
+    "genre_idx": 0,
+    "graph_path": "data/processed/graphs/blues.00001.pt",
+    "audio_path": "data/raw/gtzan/genres_original/blues/blues.00001.wav"
+  },
+  {
+    "track_id": "jazz.00091",
+    "genre": "jazz",
+    "genre_idx": 5,
+    "graph_path": "data/processed/graphs/jazz.00091.pt",
+    "audio_path": "data/raw/gtzan/genres_original/jazz/jazz.00091.wav"
+  },
+  {
+    "track_id": "hiphop.00062",
+    "genre": "hiphop",
+    "genre_idx": 4,
+    "graph_path": "data/processed/graphs/hiphop.00062.pt",
+    "audio_path": "data/raw/gtzan/genres_original/hiphop/hiphop.00062.wav"
+  },
+  {
+    "track_id": "metal.00089",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00089.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00089.wav"
+  },
+  {
+    "track_id": "pop.00095",
+    "genre": "pop",
+    "genre_idx": 7,
+    "graph_path": "data/processed/graphs/pop.00095.pt",
+    "audio_path": "data/raw/gtzan/genres_original/pop/pop.00095.wav"
+  },
+  {
+    "track_id": "metal.00030",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00030.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00030.wav"
+  },
+  {
+    "track_id": "metal.00095",
+    "genre": "metal",
+    "genre_idx": 6,
+    "graph_path": "data/processed/graphs/metal.00095.pt",
+    "audio_path": "data/raw/gtzan/genres_original/metal/metal.00095.wav"
+  }
+]

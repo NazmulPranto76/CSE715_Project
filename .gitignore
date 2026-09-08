@@ -1,0 +1,14 @@
+# Byte-compiled files
+__pycache__/
+*.pyc
+
+# Raw audio -- too big to commit, download it yourself (see README.md)
+data/raw/gtzan/
+data/raw/musiccaps_audio/
+
+# Checkpoints -- too big to commit, get them back by rerunning the task*_train.py scripts
+results/checkpoints/*.pt
+
+# OS junk
+.DS_Store
+Thumbs.db
