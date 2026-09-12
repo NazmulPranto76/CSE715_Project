@@ -15,21 +15,18 @@ graph. Task 1 uses 3,523/755/756 captions (756 test); the audio-paired subset us
 3 is 3,287/704/715.
 
 \textbf{An important disclosure.} Tasks 1--3 share one implementation, though not one split
-or one segment length throughout: Task 1 uses the caption-only 3,523/755/756 split above and
-no audio segmentation at all; Task 2 uses GTZAN with 2-second segments; Task 3 uses MusicCaps
-with 1-second segments and the audio-paired 3,287/704/715 split (50-tag vocabulary). Task 4
-was built and run separately, in a second, independent implementation of the same
-architecture family (2-second MusicCaps segments; a 3,136/673/673 split assembled
-independently from this implementation's own audio cache, rather than by augmenting the
-primary evidence base's 3,287/704/715 split above -- possible clip overlap between the two
-independently assembled subsets was not measured; and a 30-tag vocabulary for its own
-zero-shot sanity check). Both
-implementations share the same node-feature
-definition, similarity-graph rule, and encoder architectures (Section~\ref{sec:models}), and
-the paper's cross-task argument (Section~\ref{sec:cross-task}) does not depend on the exact
-segment length or split size being identical -- but the two are not byte-for-byte the same
-pipeline, and we say so plainly rather than imply a single shared implementation produced all
-four tasks' numbers.
+or segment length: Task 1 uses the caption-only 3,523/755/756 split above with no audio
+segmentation; Task 2 uses GTZAN with 2-second segments; Task 3 uses MusicCaps with 1-second
+segments and the audio-paired 3,287/704/715 split (50-tag vocabulary). Task 4 was built and
+run separately, in a second, independent implementation of the same architecture family
+(2-second MusicCaps segments; a 3,136/673/673 split assembled independently from this
+implementation's own audio cache, not by augmenting the primary split above -- overlap
+between the two subsets was not measured; a 30-tag vocabulary for its own zero-shot check).
+Both implementations share the same node-feature definition, similarity-graph rule, and
+encoder architectures (Section~\ref{sec:models}), and the cross-task argument
+(Section~\ref{sec:cross-task}) does not depend on segment length or split size being
+identical -- but the two are not byte-for-byte the same pipeline, stated plainly rather than
+implying one implementation produced all four tasks' numbers.
 
 \subsection{Audio segmentation and node features}
 Task 1 uses no audio at all -- text only. Where audio is used (Tasks 2--4), each track is
@@ -41,35 +38,30 @@ cross-segment information built in.
 
 \subsection{Graph construction}
 Edges connect (a) temporally adjacent segments, and (b) any pair of segments whose feature
-cosine similarity exceeds a fixed threshold $\tau=0.8$ -- the same underlying pairwise-segment-
-similarity computation used in self-similarity-matrix analysis of audio structure
-\cite{foote2000novelty}, here thresholded into a graph's edge set rather than read off as a
-novelty curve. Writing $X=\{x_1,\dots,x_n\}$ for a
-track's segment features, the similarity edge set is
+cosine similarity exceeds a fixed threshold $\tau=0.8$ -- the same pairwise-segment-similarity
+computation used in self-similarity-matrix analysis of audio structure \cite{foote2000novelty},
+here thresholded into a graph's edge set rather than read off as a novelty curve. Writing
+$X=\{x_1,\dots,x_n\}$ for a track's segment features, the similarity edge set is
 \[
 A_{\mathrm{sim}} = \{(i,j) : \cos(x_i,x_j) > \tau\},
 \]
 a deterministic function of $X$ alone -- a property that matters directly for interpreting
-the results in Section~\ref{sec:cross-task}. This scoping applies to the similarity edges
-specifically, not to the deployed construction's temporal-adjacency edges, which encode
-segment order -- information not recoverable from an unordered feature set, and therefore
-outside this argument's premise. Measuring the deployed construction directly confirms it is
-dense: mean edge density 95.4\% (MusicCaps) to 97.9\% (GTZAN), with 76.4\% to 84.0\% of
-individual graphs \emph{fully} connected (a stricter, related statistic, not the same
-number; these two datasets are the ones this paper's own comparisons use -- a companion
-audit measures a third dataset, MagnaTagATune, not used here, at a comparably high 98.9\%
-density and is not included in this range). The MusicCaps figure was measured on Task 3's
-715-example test split specifically (1-second segments, roughly 10 nodes per graph); it was
-not separately re-measured for Task 4's independent 2-second-segment MusicCaps pipeline, so
-we report it as evidence about Task 3's graphs and do not extend it to Task 4's without a
-direct check. Randomly
-rewiring or resampling its edges reproduces almost the same graph under a different name. A
-repaired, sparser construction (mutual $k$-nearest-neighbor, $k\in\{4,8,16\}$, verified
-non-degenerate before use, though only three of six dataset/$k$ combinations pass this check
--- $k{=}16$ fails on both datasets and MusicCaps $k{=}8$ also fails) is used in a companion
-audit of this same system \cite{tismir_audit}; the present paper uses the original, denser
-construction throughout, since Task 2/3/4's baseline checkpoints were trained on it, and
-notes this as a limitation (Section~\ref{sec:discussion}).
+Section~\ref{sec:cross-task}. This scoping applies to similarity edges specifically, not the
+deployed construction's temporal-adjacency edges, which encode segment order -- not
+recoverable from an unordered feature set, outside this argument's premise. Measuring the
+deployed construction directly confirms it is dense: mean edge density 95.4\% (MusicCaps) to
+97.9\% (GTZAN), with 76.4\%-84.0\% of individual graphs \emph{fully} connected (a stricter,
+related statistic; a companion audit measures a third dataset, MagnaTagATune, not used here,
+at a comparably high 98.9\% density, not included in this range). The MusicCaps figure was
+measured on Task 3's 715-example test split (1-second segments, roughly 10 nodes per graph);
+not separately re-measured for Task 4's independent 2-second-segment pipeline, so we report
+it as evidence about Task 3's graphs only. Randomly rewiring or resampling its edges
+reproduces almost the same graph under a different name. A repaired, sparser construction
+(mutual $k$-NN, $k\in\{4,8,16\}$, verified non-degenerate before use, though only three of
+six dataset/$k$ combinations pass -- $k{=}16$ fails on both datasets and MusicCaps $k{=}8$
+also fails) is used in a companion audit of this same system \cite{tismir_audit}; this paper
+uses the original, denser construction throughout, since Task 2/3/4's checkpoints were
+trained on it, noted as a limitation (Section~\ref{sec:discussion}).
 
 \subsection{Text encoding}
 Captions and tag phrases are tokenized with a standard BERT-family tokenizer and encoded
@@ -79,32 +71,28 @@ with a fine-tuned BERT/DistilBERT model (Section~\ref{sec:models}).
 We ran three checks before treating any result as evidence.
 
 \textbf{Caption-level label leakage (Task 1).} MusicCaps captions were checked for direct
-lexical overlap with the target tag vocabulary: averaged across the 50 tags (a label-macro
-average, not a per-clip average), 69.1\% of the time a tag's own word or a near-literal
-match for it appears in the caption of a clip it labels. This is a real, substantial effect
-and is discussed directly in Section~\ref{sec:cross-task} -- it explains part of why text
-alone is so strong in Task 1, though a caption-sanitization control (target words
-removed, model retrained from scratch) still recovers 84.3\% of original performance,
-showing the effect is real but not total.
+lexical overlap with the target tag vocabulary: averaged across the 50 tags (label-macro, not
+per-clip), 69.1\% of the time a tag's own word or a near-literal match appears in the caption
+of a clip it labels. This is real and substantial, discussed directly in
+Section~\ref{sec:cross-task} -- it explains part of why text alone is so strong in Task 1,
+though a caption-sanitization control (target words removed, retrained from scratch) still
+recovers 84.3\% of original performance, showing the effect is real but not total.
 
 \textbf{GTZAN duplicate and split-leakage audit.} We hashed all 1,000 raw GTZAN audio files
-(999 of which are used across the train/val/test splits) and found \textbf{14 exact,
-byte-identical duplicate pairs} -- consistent with GTZAN's documented quality issues
-\cite{sturm2013gtzan}. Cross-checking these pairs against the train/val/test split used
-throughout this paper found \textbf{7 of the 14 pairs cross a split boundary} (e.g.\ one
-copy in train, the other in test), meaning a small number of test tracks have a
-byte-identical duplicate in the training set. One duplicate pair additionally carries two
-different genre labels (\texttt{metal.00058.wav} and \texttt{rock.00016.wav} are
-byte-identical but filed under different genres), a labeling inconsistency independent of
-splitting. In absolute terms this affects a small fraction of the 150-track test set
-(\textbf{3 of 150 test tracks} have an exact training-set duplicate). This is unlikely to
-explain Task 2's largest gaps (the CNN-vs-GraphSAGE gap of 0.168, or the pooling-confounded
-edge-free comparison of 0.045), but we do not treat it as ruled out for the smaller,
-pooling-matched Task 2 contrast (0.0072) -- see Section~\ref{sec:cross-task} for why. It is
-real, previously undocumented for this specific split, and disclosed rather than corrected
-after the fact (correcting it would require retraining every Task 2 model on a new split,
-changing every number in this paper -- left as a direct next step, not silently patched
-here).
+(999 used across the splits) and found \textbf{14 exact, byte-identical duplicate pairs} --
+consistent with GTZAN's documented quality issues \cite{sturm2013gtzan}. Cross-checking
+against the split used throughout found \textbf{7 of the 14 pairs cross a split boundary}
+(e.g.\ one copy in train, the other in test), meaning a small number of test tracks have a
+byte-identical duplicate in the training set. One pair additionally carries two different
+genre labels (\texttt{metal.00058.wav} and \texttt{rock.00016.wav} are byte-identical but
+filed under different genres), a labeling inconsistency independent of splitting. In absolute
+terms this affects a small fraction of the test set (\textbf{3 of 150 test tracks} have an
+exact training-set duplicate). Unlikely to explain Task 2's largest gaps (CNN-vs-GraphSAGE
+0.168, or the pooling-confounded edge-free comparison 0.045), but not ruled out for the
+smaller, pooling-matched contrast (0.0072) -- see Section~\ref{sec:cross-task} for why. Real,
+previously undocumented for this split, disclosed rather than corrected after the fact
+(correcting would require retraining every Task 2 model on a new split, changing every
+number here -- left as a direct next step, not silently patched).
 
 \textbf{MusicCaps split-leakage audit.} All MusicCaps train/val/test splits were checked for
 duplicate or overlapping YouTube IDs, both within a split and across splits. None were found

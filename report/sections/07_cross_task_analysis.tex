@@ -9,114 +9,102 @@ for a fixed threshold rule $g$ (Section~\ref{sec:data}). Because $A_{\mathrm{sim
 deterministic function of $X$ and nothing else, it cannot, in principle, carry information
 about a downstream target $Y$ beyond what $X$ already carries:
 $I(Y;X,A_{\mathrm{sim}})=I(Y;X)$, a direct instance of the data-processing inequality
-\cite{cover2006elements}. This is a claim about Shannon information specifically -- that a
-sufficiently powerful model, trained without limit, could not extract more from
-$(X,A_{\mathrm{sim}})$ jointly than from $X$ alone -- not a claim that any particular
-finite, trained model in this paper actually reaches that limit; the experiments, not this
-inequality alone, are what test whether the trained models here benefit in practice. This
-argument covers the similarity edges specifically, not the deployed construction's temporal
-edges, which encode segment order and are not recoverable from an unordered feature set. It
-is also not only a theoretical point here: the deployed graphs, for the two datasets this
-paper's comparisons use, have mean edge density 95.4\% to 97.9\%, with 76.4\% to 84.0\% of
+\cite{cover2006elements}. This is a claim about Shannon information -- that a sufficiently
+powerful model, trained without limit, could not extract more from $(X,A_{\mathrm{sim}})$
+jointly than from $X$ alone -- not that any particular finite, trained model here reaches
+that limit; the experiments, not this inequality alone, test whether the trained models
+benefit in practice. This covers the similarity edges specifically, not the deployed
+construction's temporal edges, which encode segment order and are not recoverable from an
+unordered feature set. It is not only theoretical: the deployed graphs, for the two datasets
+this paper's comparisons use, have mean edge density 95.4\%-97.9\%, with 76.4\%-84.0\% of
 individual graphs fully connected, and randomly rewiring the edge set reproduces almost the
 same graph under a different name (Section~\ref{sec:data}).
 
 \textbf{The direct graph-vs-edge-free comparisons are mixed at the single-cell level, but
 none shows the graph clearly ahead once its own best supporting diagnostic is considered.}
 Task 2's pooling-matched comparison favors the edge-free encoder by +0.0072 macro-F1 (a
-larger, but pooling-confounded, +0.045 gap also exists and is reported separately,
+larger, pooling-confounded +0.045 gap also exists, reported separately,
 Section~\ref{sec:results-t2}). Task 3's standalone edge-free \textit{gnn\_only} comparison is
 genuinely mixed and pooling-dependent -- the graph-equivalent baseline is slightly ahead at
 mean-pool (0.1640 vs.\ 0.1599) and behind at max-pool (0.1640 vs.\ 0.1689), both validation
-scores (Section~\ref{sec:results-t3}) -- so we do not read this one comparison as evidence in
-either direction; Task 3's more informative, test-set evidence is the branch-zeroing and
-complementarity diagnostics -- branch-zeroing finds a small positive contribution (+0.0088
-macro-F1, not zero, just small), while complementarity, once corrected for the graph-only
-checkpoint's label-polarity collapse (Section~\ref{sec:results-t3}), finds essentially none.
-Task 4's edge-free and graph-based encoders show no
-reliable difference across three seeds on any metric (Section~\ref{sec:results-t4}). Taken
-together: across the available test-set evidence, no task shows a clear graph advantage --
-Task 2's width/depth-matched control has disclosed dropout and seed mismatches
-(Section~\ref{sec:protocol}), Task 3's edge-free comparison is validation-only, and Task 4
-supplies the repeated test-set comparison; where a standalone comparison is mixed
+scores (Section~\ref{sec:results-t3}) -- so we do not read this as evidence in either
+direction; Task 3's more informative, test-set evidence is branch-zeroing and
+complementarity -- branch-zeroing finds a small positive contribution (+0.0088 macro-F1, not
+zero, just small), while complementarity, corrected for the graph-only checkpoint's
+label-polarity collapse (Section~\ref{sec:results-t3}), finds essentially none. Task 4's
+edge-free and graph-based encoders show no reliable difference across three seeds on any
+metric (Section~\ref{sec:results-t4}). Taken together: no task shows a clear graph advantage
+across the available test-set evidence -- Task 2's control has disclosed dropout and seed
+mismatches (Section~\ref{sec:protocol}), Task 3's edge-free comparison is validation-only,
+and Task 4 supplies the repeated test-set comparison; where a standalone comparison is mixed
 or pooling-dependent (Task 3), we say so rather than select the reading that fits the
 pattern.
 
 \textbf{The correlational diagnostic finds essentially no complementary signal; the causal
-diagnostic finds a small but genuine one.} These are two different diagnostics, not one, and
-they do not need to agree in degree to agree in spirit. Complementarity
-(Section~\ref{sec:results-t3}) is correlational: comparing two independently trained,
-single-branch models, the graph-only model is correct on 508 of 1{,}047 cells where the
-text-only model is wrong, a 48.5\% headline "rescue rate." This number is misleading on its
-own: the graph-only checkpoint has exactly 0.0 precision and recall on 45 of its 50 tags, so
-splitting the 508 rescued cells by label polarity shows only 3 (0.6\%) are the graph model
-genuinely producing a true positive where text produced a false negative; the other 505 of
-508 (99.4\%) are the graph model defaulting to "absent" while text wrongly said "present" --
-an always-predict-absent classifier would rescue essentially the same 48.6\% of text's
-errors, so this headline number does not distinguish the checkpoint from a trivial one.
-Branch-zeroing is a within-checkpoint inference-time intervention, not a correlational count
-across two separate checkpoints: inside the actual trained fusion model, removing the graph
-branch costs 0.0088 macro-F1 and changes 1.66\% of individual predictions -- small, but a
-real, measured effect on the model as currently trained (Section~\ref{sec:results-t3} notes
-what this diagnostic does and does not establish about training-time causation). The two diagnostics are not in tension: complementarity, properly read,
-finds only three positive-label rescues -- too few to establish meaningful complementary
-detection; branch-zeroing finds the fusion model relies on the graph branch -- topology and
-node features together, since zeroing removes both, so this does not isolate topology on its
-own -- only slightly, not not at all. The two diagnostics are not two measurements of the same
-quantity: complementarity speaks to whether the independently-trained graph-only model detects
-tags text misses (it largely does not), while branch-zeroing speaks to the trained fusion
-model's own reliance on the graph branch (slight, but real, and not topology-specific). We
-read them together only as pointing in the same direction in this evidence base, not as
-converging on one number -- and Section~\ref{sec:discussion} reports that in a second
-implementation, branch-zeroing found substantially greater fusion-model reliance and
-complementarity found substantially more genuine rescue by its own graph-only model, an
-unresolved disagreement we do not paper over here.
+diagnostic finds a small but genuine one.} These are two different diagnostics, not one, and do not need to agree in degree to agree in
+spirit. Complementarity (Section~\ref{sec:results-t3}) is correlational: comparing two
+independently trained, single-branch models, the graph-only model is correct on 508 of
+1{,}047 cells where text is wrong, a 48.5\% headline "rescue rate." This is misleading: the
+graph-only checkpoint has exactly 0.0 precision and recall on 45 of 50 tags, so splitting the
+508 by label polarity shows only 3 (0.6\%) are genuine true positives; the other 505 of 508
+(99.4\%) are the graph model defaulting to "absent" while text wrongly said "present" -- an
+always-predict-absent classifier would rescue essentially the same 48.6\%, so this number
+does not distinguish the checkpoint from a trivial one. Branch-zeroing is a within-checkpoint
+inference-time intervention, not a correlational count: inside the trained fusion model,
+removing the graph branch costs 0.0088 macro-F1 and changes 1.66\% of individual
+predictions -- small, but real (Section~\ref{sec:results-t3} notes what this diagnostic does
+and does not establish about training-time causation). The two are not in tension:
+complementarity, properly read, finds only three positive-label rescues -- too few for
+meaningful complementary detection; branch-zeroing finds the fusion model relies on the graph
+branch -- topology and node features together, since zeroing removes both, not
+topology-isolating -- only slightly, not not at all. They are not two measurements of the
+same quantity: complementarity speaks to whether the independently-trained graph-only model
+detects tags text misses (largely not), while branch-zeroing speaks to the trained fusion
+model's own reliance (slight, but real, not topology-specific). We read them together only as
+pointing the same direction here, not converging on one number -- and
+Section~\ref{sec:discussion} reports that a second implementation found substantially greater
+fusion-model reliance and substantially more genuine rescue, an unresolved disagreement we do
+not paper over here.
 
 \textbf{Text dominance and graph weakness are separate findings, not one explanation for the
 other.} Caption text leaks a substantial fraction of target labels directly (69.1\%
-label-macro-averaged lexical exposure, measured for Task 1), which explains part of Task 1's
-text strength on its own, independent of anything about the graph; the sanitization control
-that measures this precisely (Section~\ref{sec:results}) was only run for Task 1, so we do
-not claim the same 69.1\% figure or the same sanitization result for Task 3 -- Task 3's
-captions are the same MusicCaps captions, so the same leakage channel plausibly exists
-there too, but this was not separately measured. The graph's weakness is established
-separately, by the edge-free controls, not inferred from text's strength. Both are true at
-once and are reported as two distinct findings.
+label-macro-averaged lexical exposure, measured for Task 1), explaining part of Task 1's text
+strength independent of the graph; the sanitization control measuring this precisely
+(Section~\ref{sec:results}) was only run for Task 1, so we do not claim the same figure or
+result for Task 3 -- Task 3 uses the same MusicCaps captions, so the same leakage channel
+plausibly exists there too, but this was not separately measured. The graph's weakness is
+established separately, by the edge-free controls, not inferred from text's strength. Both
+are true at once, reported as two distinct findings.
 
 \textbf{Dataset integrity is a genuine open question for the small comparisons, though not
-for the largest ones.} The one confirmed leakage effect (GTZAN's 7 cross-split
-exact-duplicate pairs, 3 of 150 test tracks affected, Section~\ref{sec:data}) is small
-relative to Task 2's CNN-vs-GraphSAGE gap (0.168) and its own larger, pooling-confounded
-edge-free comparison (0.045); three memorized tracks are unlikely to move either by that
-much. It is not demonstrably too small, however, to matter for Task 2's smaller,
-pooling-matched gap (0.0072): macro-F1 can move more than a raw accuracy count suggests when
-errors concentrate within one genre, and a duplicated validation-split track can also affect
-which checkpoint is selected. We do not correct the split and rerun Task 2 in this paper --
-that would change every Task 2 number reported here and is left as a direct next step -- so
-we state this honestly as an unresolved caveat on the smallest comparison specifically, not
-on the pattern as a whole. We should be precise about what a companion audit's repaired
-factorial \cite{tismir_audit} does and does not add here: it repairs the \emph{graph
-construction} (a separate density defect, unrelated to this leakage) and finds the same
-qualitative pattern, but it reuses the same underlying GTZAN train/val/test split, so it does
-\emph{not} escape this same duplicate-leakage caveat -- we do not claim it as leakage-free
-corroboration. What it and Task 4 do add is a different kind of independence: Task 4 uses
-MusicCaps (checked clean of split-level ID leakage, Section~\ref{sec:data}) and a completely
-different task type, so at least one leg of the overall pattern does not share GTZAN's
-specific leakage risk at all.
+for the largest ones.} The one confirmed leakage effect (GTZAN's 7 cross-split exact-duplicate pairs, 3 of 150 test
+tracks affected, Section~\ref{sec:data}) is small relative to Task 2's CNN-vs-GraphSAGE gap
+(0.168) and its own larger, pooling-confounded edge-free comparison (0.045); three memorized
+tracks are unlikely to move either by that much. It is not demonstrably too small, however,
+to matter for Task 2's smaller, pooling-matched gap (0.0072): macro-F1 can move more than a
+raw accuracy count suggests when errors concentrate within one genre, and a duplicated
+validation-split track can also affect which checkpoint is selected. We do not correct the
+split and rerun Task 2 here -- that would change every Task 2 number and is left as a direct
+next step -- so we state this as an unresolved caveat on the smallest comparison
+specifically, not the pattern as a whole. A companion audit's repaired factorial
+\cite{tismir_audit} repairs the \emph{graph construction} (a separate density defect,
+unrelated to this leakage) and finds the same qualitative pattern, but reuses the same GTZAN
+split, so it does \emph{not} escape this leakage caveat -- not claimed as leakage-free
+corroboration. Task 4 adds a different kind of independence: it uses MusicCaps (checked clean
+of split-level ID leakage, Section~\ref{sec:data}) and a completely different task type, so at
+least one leg of the pattern does not share GTZAN's leakage risk at all.
 
 \textbf{The pattern holds across three structurally different learning settings, though not
-via the identical measurement in each.} Single-label classification (Task 2), multi-label
-classification with a strong second modality present (Task 3), and ranking under a
-contrastive objective with no genre or tag class labels, only audio-caption pairing (Task 4)
-are three different problems, evaluated
-with three different metrics, and we do not claim one uniform comparison recurs across all
-three. Task 2's direct graph-vs-edge-free comparison favors edge-free. Task 3's own direct
-comparison is mixed (Section~\ref{sec:results-t3}); what recurs there is not "edge-free
-ahead" but the same underlying conclusion -- little detectable graph benefit -- reached via
-one inference-time intervention and one correlational diagnostic instead. Task 4 shows no reliable difference either way. The
-consistent thread across all three is the \emph{conclusion} (no reliable graph benefit
-detected), not an identically-shaped comparison in each case, which is more informative than
-any one task alone but should be read with the caveats above (validation-only numbers and a
-mixed standalone result in Task 3, unresolved leakage for Task 2's smallest comparison, two
-separate implementations across Tasks 1--3 versus Task 4) -- a consistent signal, not four
-independent, airtight proofs of the same fact.
+via the identical measurement in each.} Single-label classification (Task 2), multi-label classification with a strong second
+modality present (Task 3), and ranking under a contrastive objective with no class labels
+(Task 4) are three different problems, evaluated with three different metrics; we do not
+claim one uniform comparison recurs across all three. Task 2's direct comparison favors
+edge-free. Task 3's own comparison is mixed (Section~\ref{sec:results-t3}); what recurs is
+not "edge-free ahead" but the same underlying conclusion -- little detectable graph
+benefit -- reached via an inference-time intervention and a correlational diagnostic instead.
+Task 4 shows no reliable difference either way. The consistent thread is the
+\emph{conclusion} (no reliable graph benefit detected), not an identically-shaped comparison,
+more informative than any one task alone but read with the caveats above (validation-only
+numbers and a mixed standalone result in Task 3, unresolved leakage for Task 2's smallest
+comparison, two separate implementations across Tasks 1--3 versus Task 4) -- a consistent
+signal, not four independent, airtight proofs of the same fact.

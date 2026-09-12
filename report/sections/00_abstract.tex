@@ -1,44 +1,35 @@
 \begin{abstract}
 Music understanding systems often combine text and audio, and audio is often represented as
-a graph: short segments become nodes, with edges linking segments that are close in time or
-similar in content. When a graph's structure is a deterministic function of its own node
-features, the data-processing inequality guarantees it cannot add Shannon information beyond
-those features -- an analytic fact, not something an experiment can test. What experiments
-can test is the practical question: whether such a graph still helps a real, finite model,
-for instance as a computational shortcut or inductive bias. We test that practical question
-directly, across four tasks built on the same node features and graph construction rule:
-text-only tag prediction (no graph at all), graph-based genre classification,
-graph-plus-text fusion, and audio-text contrastive retrieval. Tasks 2 and 4 each compare
-their graph-based model against a width/depth-matched, lower-parameter, edge-free
-alternative on held-out test data; Task 3's own direct comparison is validation-only, so its
-evidence instead comes from two test-set diagnostics: branch-zeroing inside the trained
-fusion model, and a cross-tabulation of independently-trained single-branch checkpoints. No
-task shows a graph-based model with a \emph{learned} aggregation step clearly and reliably
-ahead of its edge-free counterpart. One result complicates this and is reported rather than
-hidden: a non-learned exact 2-hop neighbor aggregation in genre classification outperforms
-GraphSAGE and both edge-free readings (though not the CNN baseline, which uses neither the
-graph nor these node features) -- though it also uses a different training recipe (full-batch
-optimization, no dropout, a different epoch budget) than the models it is compared against,
-so this is suggestive of under-exploited topology, not a clean ablation. In genre classification, the
-pooling-matched comparison between the two \emph{trained} models favors the edge-free
-encoder. In fusion, zeroing the graph branch inside the trained model changes only 1.7\% of
-individual (example, tag) predictions and costs 0.009 macro-F1: a small positive
-contribution, not zero, just small. A separate complementarity check -- comparing the
-independently-trained graph-only and text-only models -- at first appears to show the
-graph-only model correcting 48.5\% of the text-only model's errors, but splitting these by
-label polarity shows the graph-only model predicts a tag present at all for only 5 of 50
-tags; fewer than 1\% of its apparent corrections are it actually detecting a tag the text
-model missed, and the rest are it defaulting to "absent" while text wrongly said "present" --
-this diagnostic, as originally framed, does not show real complementary signal -- a follow-up
-check in a second implementation did not confirm this reading for Task 3, and we report why
-in the Discussion rather than pick one answer. In
-retrieval, a graph-based and a no-graph encoder show no reliable difference across three
-training seeds, on every reported metric. We also checked two alternative explanations
-rather than assume them away: caption text leaking target labels directly (it does,
+a graph: short segments become nodes, with edges linking segments close in time or similar
+in content. When a graph's structure is a deterministic function of its own node features,
+the data-processing inequality guarantees it cannot add Shannon information beyond those
+features -- an analytic fact, not something an experiment can test. What experiments can
+test is the practical question: whether such a graph still helps a real, finite model, e.g.\
+as a computational shortcut or inductive bias. We test this directly across four tasks
+sharing the same node features and graph construction rule: text-only tag prediction,
+graph-based genre classification, graph-plus-text fusion, and audio-text contrastive
+retrieval. Tasks 2 and 4 each compare their graph-based model against a width/depth-matched,
+lower-parameter edge-free alternative on held-out test data; Task 3's own comparison is
+validation-only, so its evidence comes from two test-set diagnostics instead:
+branch-zeroing inside the trained fusion model, and a cross-tabulation of
+independently-trained single-branch checkpoints. No task shows a graph-based model with a
+\emph{learned} aggregation step clearly ahead of its edge-free counterpart -- though a
+non-learned exact 2-hop aggregation in genre classification outperforms both, using a
+different training recipe than what it is compared against, so this suggests
+under-exploited topology, not a clean ablation (reported, not hidden). In fusion, zeroing
+the graph branch changes only 1.7\% of individual predictions and costs 0.009 macro-F1 --
+small, not zero. A complementarity check first appears to show the graph-only model
+correcting 48.5\% of the text-only model's errors, but splitting by label polarity shows it
+predicts a tag present at all for only 5 of 50 tags, and fewer than 1\% of its apparent
+corrections are genuine detections -- not real complementary signal as originally framed; a
+follow-up check in a second implementation did not confirm this reading, discussed rather
+than resolved. In retrieval, graph-based and no-graph encoders show no reliable difference
+across three seeds, on every metric. We also checked two alternative explanations rather
+than assume them away: caption text leaking target labels directly (it does,
 substantially), and duplicate audio between train and test in one dataset (real, confirmed
-for a small number of tracks, though its actual effect on any score was not separately
-measured, and is left open as an unresolved caveat for the smallest comparison specifically). We do not conclude that graphs are useless for music -- only that this
-specific similarity-based construction does not reliably help beyond its own node features,
-for these tasks, on these datasets. We report this as the paper's central finding, not as a
-failed architecture search.
+for a small number of tracks, left open as an unresolved caveat for the smallest
+comparison). We do not conclude graphs are useless for music -- only that this specific
+construction does not reliably help beyond its own node features, for these tasks, on
+these datasets. We report this as the paper's central finding, not a failed architecture
+search.
 \end{abstract}
