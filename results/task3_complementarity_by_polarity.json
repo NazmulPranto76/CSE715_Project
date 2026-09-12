@@ -1,0 +1,11 @@
+{
+  "total_bert_wrong_gnn_right": 508,
+  "genuine_rescue_true_positive": 3,
+  "trivial_rescue_true_negative": 505,
+  "genuine_rescue_fraction_of_total_rescues": 0.005905511811023622,
+  "bert_false_negatives_total": 538,
+  "bert_false_positives_total": 509,
+  "genuine_rescue_rate_among_bert_false_negatives": 0.0055762081784386614,
+  "trivial_rescue_rate_among_bert_false_positives": 0.9921414538310412,
+  "note": "genuine_rescue = true label 1, BERT false negative, GNN true positive (GNN actually detected the tag). trivial_rescue = true label 0, BERT false positive, GNN true negative (GNN just predicted absent, its default behavior for 45/50 tags per metrics.json's fusion_gnn_only per-tag precision/recall, both 0.0)."
+}

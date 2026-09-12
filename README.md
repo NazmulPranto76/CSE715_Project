@@ -21,7 +21,6 @@ There are four tasks:
 ```
 project_submission_simple/
   README.md
-  STATUS.md                 <- what's done, dataset sizes, best results
   requirements.txt
   config.py                 <- every setting lives here (paths, sizes, hyperparameters)
 
@@ -50,19 +49,32 @@ project_submission_simple/
     task2_gnn.py / task2_cnn.py / task2_evaluate.py
     task3_train.py / task3_evaluate.py
     task4_train.py / task4_evaluate.py
+    task4_ablation_nograph.py / task4_multiseed_robustness.py / task4_qualitative_review.py
+    task3_case_studies.py / task3_complementarity_diagnostic.py / task3_complementarity_by_polarity.py
+    task2_exact_2hop_control.py / task3_branch_zeroing.py
+    gtzan_duplicate_audit.py             <- follow-up diagnostics behind report/final_report.pdf
 
   scripts/
     run_task1.py .. run_task4.py    <- one command per task (prepare -> train -> evaluate)
 
   results/
-    task*_metrics.json / *.csv       <- final numbers
+    metrics.json, task*_metrics.json / *.csv   <- final numbers
     checkpoints/                      <- best model weights per task
     plots/                            <- required charts
 
   notebooks/demo_context.ipynb    <- one short end-to-end demo
-  report_material/                <- PROJECT_REPORT.pdf (the final report), report_source/
-                                      (its LaTeX source + figures), results_summary.md, tables.md
+  report/                         <- the final report (LaTeX source + final_report.pdf)
 ```
+
+**A note on the diagnostic scripts above the `scripts/` line.** Most of them (`task4_*`,
+`task3_case_studies.py`) run fine from this repo, same as the main Task 1-4 pipeline. Five of
+them (`task2_exact_2hop_control.py`, `task3_branch_zeroing.py`,
+`task3_complementarity_by_polarity.py`, `task3_complementarity_diagnostic.py`,
+`gtzan_duplicate_audit.py`) were originally written against a second, larger research
+codebase's config format, data splits, and checkpoints (the one `report/final_report.pdf`
+actually reports Task 1-3 numbers from) -- they're included here for direct inspection and
+because the report cites them, but running them end-to-end needs that codebase's
+`config.yaml`, `data/splits/`, and `results/checkpoints/`, not just what ships in this repo.
 
 ## 2. Datasets
 
@@ -85,7 +97,7 @@ If you skip steps 1-3, Task 2's GNN still works using the graphs already
 included in `data/processed/graphs/` -- only the CNN baseline (which reads
 raw audio directly) needs the actual GTZAN files.
 
-Sample counts used for training (see `STATUS.md` for the full breakdown):
+Sample counts used for training:
 Task 1 uses 1,200/250/250 captions (a deliberately small subset -- see
 `config.py` to use more of the 4,786 available), Task 2 uses all 999 GTZAN
 tracks (699/150/150), and Task 3/4 use all currently-cached paired
@@ -149,11 +161,11 @@ results/checkpoints/*.pt
 | 3 | BERT+GNN cross-attention | MusicCaps | 673 | Macro-F1 | 0.687 |
 | 4 | GNN+BERT contrastive | MusicCaps | 673 | Audio->Text R@10 | 0.086 |
 
-See `STATUS.md` for the full breakdown, including results that came out
-lower than you might expect (the CNN beating the GNN in Task 2, the
-graph-only mode collapsing in Task 3) and a direct test of whether the
-graph branch matters at all in Tasks 2/3/4 (short answer: not detectably,
-in any of the three) -- all explained there, with numbers.
+This table is this repo's own Task 1-4 pipeline, at its own (smaller) data scale --
+`report/final_report.pdf` reports different, larger-scale numbers for Tasks 1-3 from a
+separate codebase (see the note above), and is the source to cite for the project's actual
+findings, including the direct test of whether the graph branch matters at all in Tasks 2/3/4
+(short answer: not detectably, in any of the three).
 
 ## 7. Demo notebook
 

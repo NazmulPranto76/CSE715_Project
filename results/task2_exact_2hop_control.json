@@ -1,0 +1,30 @@
+{
+  "B0_raw_mlp_nograph": {
+    "dim": 32,
+    "params": 2762,
+    "test_acc": 0.5866666436195374,
+    "test_macro_f1": 0.5797877525700106
+  },
+  "B2_1hop_exact": {
+    "dim": 64,
+    "params": 4810,
+    "test_acc": 0.5,
+    "test_macro_f1": 0.4918117281799968
+  },
+  "B3_2hop_exact": {
+    "dim": 96,
+    "params": 6858,
+    "test_acc": 0.6600000262260437,
+    "test_macro_f1": 0.6551017622424251
+  },
+  "reference_GraphSAGE_existing": {
+    "test_acc": 0.607,
+    "test_macro_f1": 0.598,
+    "note": "cited from results/metrics.json's gnn entry, not retrained here"
+  },
+  "reference_CNN_baseline_existing": {
+    "test_acc": 0.78,
+    "test_macro_f1": 0.765,
+    "note": "cited from results/metrics.json's cnn_baseline entry, not retrained here"
+  }
+}

@@ -15,3 +15,7 @@ Thumbs.db
 
 # Ad-hoc training console logs -- not committed, rerun the scripts to regenerate
 logs/
+
+# Superseded by report/final_report.pdf -- kept locally, not pushed
+STATUS.md
+report_material/

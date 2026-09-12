@@ -1,0 +1,22 @@
+{
+  "n_test": 715,
+  "n_tags": 50,
+  "checkpoint": "fusion_concat_best.pt",
+  "results": {
+    "correct": {
+      "macro_f1": 0.7054967623296572
+    },
+    "null_graph": {
+      "macro_f1": 0.6966798401919009
+    },
+    "null_text": {
+      "macro_f1": 0.02763446255402733
+    },
+    "both_null": {
+      "macro_f1": 0.0
+    }
+  },
+  "graph_contribution_macro_f1": 0.008816922137756311,
+  "text_contribution_macro_f1": 0.6778622997756298,
+  "pct_individual_predictions_changed_when_graph_zeroed": 1.6643356643356644
+}
