@@ -1,7 +1,7 @@
 {
   "epochs": 10,
   "seed": 42,
-  "note": "PyTorch determinism was not forced (no torch.use_deterministic_algorithms), so exact macro-F1 can vary slightly between runs with the same seed; the qualitative conclusion (a larger effect than the primary evidence base's 0.0088 / 0.6%, present even at this shorter epoch budget) was checked to hold across more than one run.",
+  "note": "This is a single archived run. PyTorch determinism was not forced (no torch.use_deterministic_algorithms), so an exact rerun with the same seed could land at a somewhat different macro-F1; we did not archive additional runs, so we report only this one measured value rather than a range, and do not claim it is exactly reproducible.",
   "branch_zeroing": {
     "correct_macro_f1": 0.7230896081147873,
     "null_graph_macro_f1": 0.5558856415728773,

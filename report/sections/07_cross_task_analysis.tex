@@ -60,12 +60,16 @@ branch costs 0.0088 macro-F1 and changes 1.66\% of individual predictions -- sma
 real, measured effect on the model as currently trained (Section~\ref{sec:results-t3} notes
 what this diagnostic does and does not establish about training-time causation). The two diagnostics are not in tension: complementarity, properly read,
 finds only three positive-label rescues -- too few to establish meaningful complementary
-detection; branch-zeroing finds
-the fusion model relies on the graph branch only slightly, not not at all. Both point to weak
-graph reliance in this evidence base, at two different levels of evidence -- though
-Section~\ref{sec:discussion} reports that a second implementation, applying both diagnostics
-to its own checkpoints, found substantially more reliance, an unresolved disagreement we do
-not paper over here.
+detection; branch-zeroing finds the fusion model relies on the graph branch -- topology and
+node features together, since zeroing removes both, so this does not isolate topology on its
+own -- only slightly, not not at all. The two diagnostics are not two measurements of the same
+quantity: complementarity speaks to whether the independently-trained graph-only model detects
+tags text misses (it largely does not), while branch-zeroing speaks to the trained fusion
+model's own reliance on the graph branch (slight, but real, and not topology-specific). We
+read them together only as pointing in the same direction in this evidence base, not as
+converging on one number -- and Section~\ref{sec:discussion} reports that a second
+implementation, applying both diagnostics to its own checkpoints, found substantially more
+reliance, an unresolved disagreement we do not paper over here.
 
 \textbf{Text dominance and graph weakness are separate findings, not one explanation for the
 other.} Caption text leaks a substantial fraction of target labels directly (69.1\%

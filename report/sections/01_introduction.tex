@@ -61,15 +61,18 @@ graph at all and serves as the anchor; Tasks 2--4 each include a direct graph-vs
 comparison, and in none of the three does the graph-based model come out clearly and reliably
 ahead. Task 2's fairest (pooling-matched) comparison favors the edge-free alternative, though
 a non-learned 2-hop control complicates this (Section~\ref{sec:discussion}). Task 3's single
-standalone comparison is mixed and inconclusive, but its two follow-up diagnostics --
-branch-zeroing (an inference-time intervention on the trained fusion model, finding it relies
-on the graph branch only slightly) and complementarity (correlational,
-comparing two separately-trained single-branch models, finding almost no positive-label
-rescue by the graph-only model) -- together find the graph contributing
-little the fusion model actually ends up relying on, in this evidence base; a follow-up check
-in a second implementation did not confirm this for Task 3, and Section~\ref{sec:discussion}
-reports that disagreement openly rather than alongside only the reading that fits the
-pattern. Task 4 shows no consistent advantage
+standalone comparison is mixed and inconclusive, but its two follow-up diagnostics tell two
+distinct, narrower stories: branch-zeroing (an inference-time intervention on the trained
+fusion model) finds it relies only slightly on the graph branch -- topology and node features
+together, since zeroing removes both, so this does not isolate topology specifically --
+while complementarity (correlational, comparing two separately-trained single-branch models
+rather than probing the fusion model itself) finds almost no positive-label rescue by the
+graph-only model, i.e.\ no sign that it detects tags text misses. Together, in this evidence
+base, the two point toward little demonstrated graph value for Task 3, though neither result
+is a topology-isolating test and complementarity says nothing about the fusion model's own
+behavior; a follow-up check in a second implementation did not confirm even this narrower
+reading, and Section~\ref{sec:discussion} reports that disagreement openly rather than
+alongside only the reading that fits the pattern. Task 4 shows no consistent advantage
 either way across three seeds. We report this consistency, with each result's own caveats, as
 the paper's main finding. We also check two alternative explanations that could produce this
 pattern without the graph itself being at fault -- caption text directly leaking target

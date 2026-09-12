@@ -7,9 +7,14 @@ specific evidence differs by task, and we do not claim it is uniform. Task 2's
 pooling-matched comparison favors the edge-free encoder directly. Task 3's own standalone
 graph-vs-edge-free comparison is mixed and pooling-dependent and is \emph{not} the evidence
 we rely on there; its branch-zeroing and complementarity diagnostics, both on held-out test
-data, are what show little reliance on the graph -- in this evidence base specifically, since
-a follow-up check later in this section found the opposite in a second implementation and we
-have not resolved which reading generalizes. Task 4 shows no reliable difference across
+data, are what we rely on instead, though they establish two different, narrower things, not
+one: branch-zeroing shows the trained fusion model relies only slightly on the graph branch
+(topology and node features together, since zeroing removes both -- not a topology-isolating
+test), and complementarity shows the independently-trained graph-only model detects almost
+nothing text misses (a claim about that model, not about the fusion model). Taken together,
+in this evidence base specifically, they point to little demonstrated graph value for Task 3 --
+since a follow-up check later in this section found the opposite in a second implementation
+and we have not resolved which reading generalizes. Task 4 shows no reliable difference across
 three seeds. Tasks 2 and 4 rely directly on width/depth-matched, lower-parameter edge-free
 controls; Task 3 also has such a control, but only at validation, so its relied-upon
 test-set evidence comes from branch-zeroing and complementarity instead, neither of which is
@@ -87,14 +92,17 @@ enough to be obvious on a direct look.
 about why.} We reran Task 3's branch-zeroing and complementarity diagnostics in a second,
 independent implementation of this same architecture family -- the one Task 4's own numbers
 are drawn from -- and did not get the same answer. There, removing the graph branch costs
-0.12 macro-F1 at that implementation's own epoch budget and roughly 0.16--0.17 macro-F1 when
-retrained at the shorter epoch budget used before (not exactly reproducible between runs, in
-the same vein as Table~\ref{tab:task2-full}'s 2-hop result above); the complementarity check
-finds 169 of 359 rescued cells (47.1\%) genuine at the longer budget and 142 of 427 (33.3\%)
-at the shorter one, both well above the 3 of 508 (0.6\%) reported above. Both readings are
-real measurements, not a mistake in either one, so this needed an explanation rather than a
-choice of which number to believe. Retraining at the shorter epoch budget still showing the
-larger effect rules out training duration specifically. One plausible remaining contributor
+0.12 macro-F1 at that implementation's own epoch budget and 0.1672 macro-F1 when retrained at
+the shorter epoch budget used before (a single archived run of that shorter-budget control; we
+did not force deterministic training, so, in the same vein as Table~\ref{tab:task2-full}'s
+2-hop result above, an exact rerun could land at a different value, though we would not expect
+the qualitative pattern -- a larger effect than this section's 0.0088 -- to reverse); the
+complementarity check finds 169 of 359 rescued cells (47.1\%) genuine at the longer budget and
+142 of 427 (33.3\%) at the shorter one, both well above the 3 of 508 (0.6\%) reported above.
+Both readings are real measurements, not a mistake in either one, so this needed an
+explanation rather than a choice of which number to believe. The larger effect persists at the
+shorter epoch budget, so the longer budget alone does not explain the implementation-level
+disagreement. One plausible remaining contributor
 is class weighting: unlike the checkpoint behind this section's complementarity numbers
 (trained without positive-class weighting and collapsed to predicting a tag present for only
 5 of its 50 tags), the second implementation trains all four fusion modes, including
