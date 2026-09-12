@@ -91,6 +91,6 @@ TASK3_LR = 5e-5
 # ---------------------------------------------------------------------
 TASK4_EMBED_DIM = 128
 TASK4_TEMPERATURE = 0.07
-TASK4_BATCH_SIZE = 32
-TASK4_EPOCHS = 12
+TASK4_BATCH_SIZE = 128          # more negatives per InfoNCE anchor -- the main lever tried after the 4.7x dataset merge
+TASK4_EPOCHS = 20
 TASK4_LR = 1e-4

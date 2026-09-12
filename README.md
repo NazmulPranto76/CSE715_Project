@@ -1,6 +1,6 @@
 # GNN-Based BERT for Understanding Context from Music
 
-A course project. The goal is to understand the **context** of a piece of
+The goal is to understand the **context** of a piece of
 music -- genre, mood, instruments -- using two different kinds of input:
 
 1. **Text** -- a caption describing the music (via BERT/DistilBERT)
@@ -31,7 +31,7 @@ project_submission_simple/
     processed/graphs/           <- GTZAN segment graphs (Task 2)
     processed/musiccaps_graphs/  <- MusicCaps segment graphs (Task 3/4, ships with this repo)
     splits/                        <- train/val/test lists + tag vocabularies (JSON)
-    graph_examples/                 <- example graph files for the submission requirement
+    graph_examples/                 <- example graph files (a representative sample)
 
   src/
     common.py                 <- seed + device helpers
@@ -60,7 +60,8 @@ project_submission_simple/
     plots/                            <- required charts
 
   notebooks/demo_context.ipynb    <- one short end-to-end demo
-  report_material/                <- PROJECT_REPORT.md (full writeup), results_summary.md, tables.md
+  report_material/                <- PROJECT_REPORT.pdf (the final report), report_source/
+                                      (its LaTeX source + figures), results_summary.md, tables.md
 ```
 
 ## 2. Datasets
@@ -85,10 +86,10 @@ included in `data/processed/graphs/` -- only the CNN baseline (which reads
 raw audio directly) needs the actual GTZAN files.
 
 Sample counts used for training (see `STATUS.md` for the full breakdown):
-Task 1 uses 1,200/250/250 captions, Task 2 uses all 999 GTZAN tracks
-(699/150/150), and Task 3/4 use 858/146/142 paired examples. These are
-small subsets on purpose so the whole project runs in well under 30
-minutes -- see `config.py` to change the sizes.
+Task 1 uses 1,200/250/250 captions (a deliberately small subset -- see
+`config.py` to use more of the 4,786 available), Task 2 uses all 999 GTZAN
+tracks (699/150/150), and Task 3/4 use all currently-cached paired
+examples, 3,136/673/673.
 
 ## 3. Installation
 
@@ -144,14 +145,15 @@ results/checkpoints/*.pt
 | 1 | DistilBERT | MusicCaps | 250 | Macro-F1 | 0.566 |
 | 2 | GraphSAGE (GNN) | GTZAN | 150 | Macro-F1 | 0.616 |
 | 2 | CNN (mel-spectrogram) | GTZAN | 150 | Macro-F1 | 0.762 |
-| 3 | BERT+GNN concat | MusicCaps | 142 | Macro-F1 | 0.629 |
-| 3 | BERT+GNN cross-attention | MusicCaps | 142 | Macro-F1 | 0.500 |
-| 4 | GNN+BERT contrastive | MusicCaps | 142 | Audio->Text R@10 | 0.239 |
+| 3 | BERT+GNN concat | MusicCaps | 673 | Macro-F1 | 0.722 |
+| 3 | BERT+GNN cross-attention | MusicCaps | 673 | Macro-F1 | 0.687 |
+| 4 | GNN+BERT contrastive | MusicCaps | 673 | Audio->Text R@10 | 0.086 |
 
-See `STATUS.md` for the full breakdown, including two results that came out
-lower than you might expect (the CNN beating the GNN in Task 2, and the
-graph-only mode collapsing in Task 3) -- both are real, both are explained
-there.
+See `STATUS.md` for the full breakdown, including results that came out
+lower than you might expect (the CNN beating the GNN in Task 2, the
+graph-only mode collapsing in Task 3) and a direct test of whether the
+graph branch matters at all in Tasks 2/3/4 (short answer: not detectably,
+in any of the three) -- all explained there, with numbers.
 
 ## 7. Demo notebook
 

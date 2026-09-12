@@ -1,0 +1,12 @@
+{
+  "condition": "no_graph_mlp_ablation",
+  "best_val_avg_r10": 0.10846953839063644,
+  "test_metrics": {
+    "audio_to_text_R@1": 0.011887072585523129,
+    "text_to_audio_R@1": 0.011887072585523129,
+    "audio_to_text_R@5": 0.06983654946088791,
+    "text_to_audio_R@5": 0.05646359547972679,
+    "audio_to_text_R@10": 0.1144130751490593,
+    "text_to_audio_R@10": 0.09509658068418503
+  }
+}

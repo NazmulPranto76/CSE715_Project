@@ -5,7 +5,7 @@ Evaluates the Task 4 dual encoder on the test set: retrieval Recall@{1,5,10}
 in both directions (audio->caption and caption->audio), plus qualitative
 "top-3 retrieved clips per caption" examples.
 
-Also attempts the assignment's zero-shot tag experiment: embed each TAG
+Also attempts a zero-shot tag experiment: embed each TAG
 NAME as text (no fine-tuning for this), and see how well cosine similarity
 to the audio embedding predicts that tag -- without ever training a
 tag classifier. A low score here is fine; the point is just to check it

@@ -83,7 +83,7 @@ def main():
         out_path.write_text(json.dumps(split, indent=2))
         print(f"  {name}: {len(split)} paired examples -> {out_path}")
 
-    # Save a few more example graphs, on top of Task 2's, for the submission requirement.
+    # Save a few more example graphs, on top of Task 2's, as a representative sample.
     config.GRAPH_EXAMPLES_DIR.mkdir(parents=True, exist_ok=True)
     for rec in train[:10]:
         shutil.copyfile(graphs_dir / f"{rec['track_id']}.pt", config.GRAPH_EXAMPLES_DIR / f"musiccaps_{rec['track_id']}.pt")

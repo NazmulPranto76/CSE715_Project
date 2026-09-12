@@ -1,14 +1,14 @@
 {
-  "audio_to_text_R@1": 0.07746478915214539,
-  "text_to_audio_R@1": 0.035211268812417984,
-  "audio_to_text_R@5": 0.15492957830429077,
-  "text_to_audio_R@5": 0.13380281627178192,
-  "audio_to_text_R@10": 0.23943662643432617,
-  "text_to_audio_R@10": 0.21830986440181732,
-  "num_test_examples": 142,
+  "audio_to_text_R@1": 0.008915304206311703,
+  "text_to_audio_R@1": 0.013372956775128841,
+  "audio_to_text_R@5": 0.057949479669332504,
+  "text_to_audio_R@5": 0.05497771129012108,
+  "audio_to_text_R@10": 0.08618127554655075,
+  "text_to_audio_R@10": 0.10995542258024216,
+  "num_test_examples": 673,
   "zero_shot_tag_prediction": {
-    "macro_f1": 0.14415295494607977,
-    "micro_f1": 0.1483216237314598,
+    "macro_f1": 0.14648126560574032,
+    "micro_f1": 0.15131890696572423,
     "note": "Zero-shot: tag names embedded as text, no supervised tag training."
   }
 }

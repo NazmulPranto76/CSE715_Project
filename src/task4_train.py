@@ -41,10 +41,11 @@ def evaluate_split(model, loader, device):
     return retrieval_recall_at_k(g, t)
 
 
-def main():
-    set_seed(config.SEED)
+def main(seed=None):
+    seed = config.SEED if seed is None else seed
+    set_seed(seed)
     device = get_device()
-    print(f"Using device: {device}")
+    print(f"Using device: {device}  seed={seed}")
 
     train_ds = FusionPairDataset(config.SPLITS_DIR / "task34_train.json", config.SPLITS_DIR / "tag_vocab_task34.json")
     val_ds = FusionPairDataset(config.SPLITS_DIR / "task34_val.json", config.SPLITS_DIR / "tag_vocab_task34.json")

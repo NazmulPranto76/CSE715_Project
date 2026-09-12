@@ -1,0 +1,14 @@
+{
+  "audio_to_text_R@1": 0.010401188395917416,
+  "text_to_audio_R@1": 0.010401188395917416,
+  "audio_to_text_R@5": 0.05646359547972679,
+  "text_to_audio_R@5": 0.06240713223814964,
+  "audio_to_text_R@10": 0.0921248123049736,
+  "text_to_audio_R@10": 0.10995542258024216,
+  "num_test_examples": 673,
+  "zero_shot_tag_prediction": {
+    "macro_f1": 0.15136808745965386,
+    "micro_f1": 0.15702220832030028,
+    "note": "Zero-shot: tag names embedded as text, no supervised tag training."
+  }
+}

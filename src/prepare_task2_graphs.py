@@ -113,7 +113,7 @@ def main():
         out_path.write_text(json.dumps(split, indent=2))
         print(f"  {name}: {len(split)} tracks -> {out_path}")
 
-    # Save a handful of example graphs, for the submission requirement.
+    # Save a handful of example graphs, as a representative sample.
     config.GRAPH_EXAMPLES_DIR.mkdir(parents=True, exist_ok=True)
     for rec in train[:25]:
         shutil.copyfile(rec["graph_path"], config.GRAPH_EXAMPLES_DIR / f"gtzan_{rec['track_id']}.pt")

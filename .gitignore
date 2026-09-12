@@ -12,3 +12,6 @@ results/checkpoints/*.pt
 # OS junk
 .DS_Store
 Thumbs.db
+
+# Ad-hoc training console logs -- not committed, rerun the scripts to regenerate
+logs/
