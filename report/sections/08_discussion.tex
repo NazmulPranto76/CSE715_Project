@@ -3,124 +3,107 @@
 \textbf{What this shows.} Across three tasks with different objectives, loss functions, and
 evaluation metrics, we could not detect a reliable benefit from this system's
 similarity-based audio graph beyond what its own node features already provide -- though the
-specific evidence differs by task, and we do not claim it is uniform. Task 2's
-pooling-matched comparison favors the edge-free encoder directly. Task 3's own standalone
-graph-vs-edge-free comparison is mixed and pooling-dependent and is \emph{not} the evidence
-we rely on there; its branch-zeroing and complementarity diagnostics, both on held-out test
-data, are what we rely on instead, though they establish two different, narrower things, not
-one: branch-zeroing shows the trained fusion model relies only slightly on the graph branch
-(topology and node features together, since zeroing removes both -- not a topology-isolating
-test), and complementarity shows the independently-trained graph-only model detects almost
-nothing text misses (a claim about that model, not about the fusion model). Taken together,
-in this evidence base specifically, they point to little demonstrated graph value for Task 3 --
-since a follow-up check later in this section found the opposite in a second implementation
-and we have not resolved which reading generalizes. Task 4 shows no reliable difference across
-three seeds. Tasks 2 and 4 rely directly on width/depth-matched, lower-parameter edge-free
-controls; Task 3 also has such a control, but only at validation, so its relied-upon
-test-set evidence comes from branch-zeroing and complementarity instead, neither of which is
-an edge-free-encoder comparison. The three findings are therefore not built from one
-identical comparison type, and the paper says so at each step rather than only here.
+evidence differs by task, not uniform. Task 2's pooling-matched comparison favors the
+edge-free encoder directly. Task 3's own standalone comparison is mixed and pooling-dependent
+and is \emph{not} the evidence we rely on there; its branch-zeroing and complementarity
+diagnostics, both on held-out test data, establish two different, narrower things: branch-
+zeroing shows the trained fusion model relies only slightly on the graph branch (topology and
+node features together, since zeroing removes both -- not topology-isolating), and
+complementarity shows the independently-trained graph-only model detects almost nothing text
+misses (a claim about that model, not the fusion model). Together, in this evidence base,
+they point to little demonstrated graph value for Task 3 -- a follow-up check later in this
+section found the opposite in a second implementation, unresolved which reading generalizes.
+Task 4 shows no reliable difference across three seeds. Tasks 2 and 4 rely on
+width/depth-matched, lower-parameter edge-free controls; Task 3's such control is
+validation-only, so its test-set evidence comes from branch-zeroing and complementarity
+instead, neither an edge-free-encoder comparison. The three findings are not built from one
+identical comparison type, stated at each step rather than only here.
 
 \textbf{What this does not show.} It does not show that graph neural networks are a poor
 choice for music understanding in general, or that no graph construction could help this
-kind of system. It shows that \emph{this specific} feature-induced similarity graph, applied
-to \emph{these} node features, on \emph{these} datasets, gave the model little it did not
-already have. A graph built from a genuinely external relation -- one not recomputable from
-the same features given to each node, such as annotated chord progressions, beat structure,
-or section repetition -- is not ruled out by this study and remains untested here.
+kind of system -- only that \emph{this specific} feature-induced similarity graph, applied to
+\emph{these} node features, on \emph{these} datasets, gave the model little it did not
+already have. A graph built from a genuinely external relation -- not recomputable from the
+same node features, such as annotated chord progressions, beat structure, or section
+repetition -- is not ruled out and remains untested here.
 
 \textbf{Why this might be happening, and a genuine complication.} The clearest candidate
 explanation is structural: a similarity threshold applied to the same features used as node
-content produces an adjacency matrix that is, in the information-theoretic sense, redundant
-with those features (Section~\ref{sec:cross-task}). A secondary, more speculative possibility
-is that even the limited topology present is not fully exploited by the trained GraphSAGE
-model -- the broader GNN literature has separately found that trained message-passing layers
-can under-use structure through over-smoothing \cite{li2018oversmoothing}, and that a fixed
-propagation step can match or exceed a trained GCN-style layer \cite{wu2019sgc}. Table
-\ref{tab:task2-full}'s exact 2-hop result (0.6630, beating both edge-free numbers and
-GraphSAGE, not the CNN baseline at 0.7654) is a genuine complication for a "topology never
-helps" reading, reported rather than explained away -- but not as a clean ablation: the 2-hop
-pipeline uses full-batch Adam for a fixed 200 epochs and no dropout, while GraphSAGE's
-training script does not pass its configured dropout through and so trains at the model
-default of 0.2 (Section~\ref{sec:protocol} discloses this bug precisely), with mini-batches
-of 32 and early stopping over up to 100 epochs; both use the same nominal weight decay,
-$10^{-4}$. These training-recipe differences, not only whether the aggregation is learned,
-could plausibly account for some or all of the gap, so we treat it as an exploratory data
-point, not evidence that isolates topology or aggregation type on its own -- a cleaner,
-topology-only result exists in a companion audit \cite{tismir_audit}
-(Section~\ref{sec:results-t2}), a same-architecture real/shuffled/random-edge factorial, but
-we flag rather than lean on it as settled support: it is an unpublished, anonymized-for-review
-manuscript with no stable public identifier at the time of writing, cited here rather than
-reproduced in full, and its full methods and result tables are not included alongside this
-paper or independently inspectable by a reader of this one. We
-do not have an equivalent 2-hop control for Tasks 3 or 4, and this result is single-run
-despite sharing GraphSAGE's documented seed (42); it is also, we found while porting its
-script into this repository for reproducibility (\texttt{task2\_exact\_2hop\_control.py}),
-not exactly reproducible across environments -- an independent rerun with identical code,
-seed, and data reached 0.6551, not 0.6630, plausibly due to floating-point
-non-associativity in the two-hop aggregation's accumulation step. Both values still clearly
-exceed GraphSAGE (0.5976) and both edge-free readings (0.6049, 0.6425), so this does not
-change the qualitative finding, but it is a further, concrete reason to treat this result as
-exploratory rather than precise. We do not treat it as overturning the
-paper's overall pattern -- but it is a real, measured number that keeps this paper from
-concluding the deployed encoders extract everything the node features have to offer.
+content produces an adjacency matrix that is, information-theoretically, redundant with those
+features (Section~\ref{sec:cross-task}). A secondary, speculative possibility: the limited
+topology present is not fully exploited by the trained GraphSAGE model -- the broader GNN
+literature separately finds trained message-passing layers can under-use structure through
+over-smoothing \cite{li2018oversmoothing}, and a fixed propagation step can match or exceed a
+trained GCN-style layer \cite{wu2019sgc}. Table \ref{tab:task2-full}'s exact 2-hop result
+(0.6630, beating both edge-free numbers and GraphSAGE, not the CNN baseline at 0.7654) is a
+genuine complication for a "topology never helps" reading, reported rather than explained
+away -- but not a clean ablation: the 2-hop pipeline uses full-batch Adam, 200 epochs, no
+dropout, while GraphSAGE's script does not pass its configured dropout through and trains at
+the default 0.2 (Section~\ref{sec:protocol} discloses this bug precisely), with mini-batches
+and early stopping (both share weight decay $10^{-4}$). These recipe differences, not only
+whether aggregation is learned, could account for some or all of the gap, so we treat it as
+exploratory -- a cleaner, topology-only result exists in a companion audit
+\cite{tismir_audit} (Section~\ref{sec:results-t2}), a same-architecture
+real/shuffled/random-edge factorial, but we flag rather than lean on it: it is an
+unpublished, anonymized-for-review manuscript with no stable public identifier at writing,
+cited rather than reproduced, its methods and tables not included alongside this paper or
+independently inspectable here. We lack an equivalent 2-hop control for Tasks 3/4, and this
+result is single-run despite sharing GraphSAGE's seed (42); porting its script into this
+repository (\texttt{task2\_exact\_2hop\_control.py}) also found it not exactly reproducible
+across environments -- an independent rerun with identical code, seed, and data reached
+0.6551, not 0.6630, plausibly floating-point non-associativity in the accumulation step. Both
+values still clearly exceed GraphSAGE (0.5976) and both edge-free readings (0.6049, 0.6425),
+not changing the qualitative finding, but a further reason to treat this result as
+exploratory. We do not treat it as overturning the paper's pattern -- but it keeps this paper
+from concluding the deployed encoders extract everything the node features offer.
 
 \textbf{Limitations.} The caption-sanitization control (69.1\% lexical exposure, 84.3\%
-retention after retraining, Section~\ref{sec:data}) was run in an internal research
-directory outside the two implementations this paper otherwise draws from; the stored numbers were
-directly re-verified against their result files for this paper, but the training script
-itself is not included alongside this paper, a reproducibility gap disclosed here
-rather than left implicit. Task 2 and Task 3's main comparisons use a single training seed each;
-only Task 4's headline comparison is repeated across seeds. GTZAN carries a small,
-previously undocumented amount of exact-duplicate, cross-split leakage
-(Section~\ref{sec:data}); MusicCaps was checked clean at the ID level but not at the
-audio-content level, so two different clips of the same underlying recording, if any exist,
-would not have been caught. Neither dataset's artist-level leakage could be checked, since
-neither ships usable artist metadata. This paper uses the original, denser graph
-construction throughout (Section~\ref{sec:data}); a companion audit of the same system
-repairs this construction and finds the same qualitative pattern on the repaired graphs
-\cite{tismir_audit}, but the present paper's own four-task comparisons were not rerun on that
-repaired construction. Retrieval evaluation here treats only the one official caption as
-correct for a given clip; a semantically reasonable but unpaired clip would be scored as an
-error under this protocol. We checked this directly on 20 retrieval failures
-(Section~\ref{sec:results-t4}) and did not find evidence of a large hidden population of
-such cases -- most failures were genuine mismatches on manual inspection, with the true clip
-ranked far outside the top 10. This check used only one checkpoint, 20 non-randomly-selected
-examples (the first 20 qualifying cases in test order), and one unblinded rater with no
-predefined rubric, so it does not rule out the effect entirely, only that it is not large
-enough to be obvious on a direct look.
+retention after retraining, Section~\ref{sec:data}) was run in an internal research directory
+outside the two implementations this paper draws from; the stored numbers were directly
+re-verified against their result files, but the training script itself is not included
+alongside this paper, a reproducibility gap disclosed here rather than left implicit. Task 2
+and Task 3's main comparisons use a single training seed each; only Task 4's headline
+comparison repeats across seeds. GTZAN carries a small, previously undocumented amount of
+exact-duplicate, cross-split leakage (Section~\ref{sec:data}); MusicCaps was checked clean at
+the ID level but not audio-content level, so duplicate underlying recordings, if any, would
+not have been caught. Neither dataset's artist-level leakage could be checked, since neither
+ships usable artist metadata. This paper uses the original, denser graph construction
+throughout (Section~\ref{sec:data}); a companion audit of the same system repairs this
+construction and finds the same qualitative pattern on repaired graphs \cite{tismir_audit},
+but this paper's own four-task comparisons were not rerun on it. Retrieval evaluation here
+treats only the one official caption as correct; a semantically reasonable but unpaired clip
+would be scored as an error. We checked this directly on 20 retrieval failures
+(Section~\ref{sec:results-t4}) and did not find evidence of a large hidden population of such
+cases -- most failures were genuine mismatches, the true clip ranked far outside the top 10.
+This used only one checkpoint, 20 non-randomly-selected examples, and one unblinded rater
+with no predefined rubric, so it does not rule out the effect entirely, only that it is not
+large enough to be obvious on a direct look.
 
 \textbf{A follow-up check that complicates the Task 3 finding, and what we do and do not know
 about why.} We reran Task 3's branch-zeroing and complementarity diagnostics in a second,
 independent implementation of this same architecture family -- the one Task 4's own numbers
-are drawn from -- and did not get the same answer. There, removing the graph branch costs
-0.12 macro-F1 at that implementation's own epoch budget and 0.1672 macro-F1 when retrained at
-the shorter epoch budget used before (a single archived run of that shorter-budget control; we
-did not force deterministic training, so, in the same vein as Table~\ref{tab:task2-full}'s
-2-hop result above, an exact rerun could land at a different value; no additional runs were
-archived to quantify that variability); the
-complementarity check finds 169 of 359 rescued cells (47.1\%) genuine at the longer budget and
-142 of 427 (33.3\%) at the shorter one, both well above the 3 of 508 (0.6\%) reported above.
-Both readings are real measurements, not a mistake in either one, so this needed an
-explanation rather than a choice of which number to believe. The larger effect persists at the
-shorter epoch budget, so the longer budget alone does not explain the implementation-level
-disagreement. One plausible remaining contributor
-is class weighting: unlike the checkpoint behind this section's complementarity numbers
-(trained without positive-class weighting and collapsed to predicting a tag present for only
-5 of its 50 tags), the second implementation trains all four fusion modes, including
-\textit{gnn\_only}, with positive-class weighting throughout. We have not isolated weighting
-as the cause, though: the two implementations also differ in split size, tag vocabulary
-(50 tags here, 30 there), and segment length, and we did not run a weighted-versus-unweighted
-comparison within one implementation to separate weighting from these other differences. In
-the second implementation, branch-zeroing found substantially greater fusion-model reliance
-on the graph branch than this section's own number, and complementarity found substantially
-more genuine positive-label rescue by its independently-trained graph-only model; neither
-result isolates graph topology specifically, as opposed to the extra node-level information
-the branch carries, since branch-zeroing does not separate the two and complementarity is a
-statement about that separate model, not about the fusion model's own behavior. We report
-this as an open, only partly explained
-disagreement between two implementations of the same task, not as a correction to the
-numbers reported above and not as evidence that the graph helps once weighted correctly.
+are drawn from -- and got a different answer. Removing the graph branch there costs 0.12
+macro-F1 at that implementation's own epoch budget and 0.1672 when retrained at the shorter
+budget used before (a single archived run; we did not force deterministic training, so, as
+with Table~\ref{tab:task2-full}'s 2-hop result, an exact rerun could land differently; no
+additional runs were archived to quantify that); complementarity finds 169 of 359 rescued
+cells (47.1\%) genuine at the longer budget and 142 of 427 (33.3\%) at the shorter, both well
+above the 3 of 508 (0.6\%) reported above. Both readings are real measurements, needing an
+explanation rather than a choice of which to believe. The larger effect persists at the
+shorter budget, so the longer budget alone does not explain the disagreement. One plausible
+contributor is class weighting: unlike this section's complementarity checkpoint (trained
+without positive-class weighting, collapsed to predicting a tag present for only 5 of 50),
+the second implementation weights all four fusion modes, including \textit{gnn\_only},
+throughout. We have not isolated weighting as the cause: the implementations also differ in
+split size, tag vocabulary (50 here, 30 there), and segment length, and no
+weighted-vs-unweighted comparison was run within one implementation to separate weighting
+from these. In the second implementation, branch-zeroing found substantially greater
+fusion-model reliance and complementarity substantially more genuine rescue by its own
+graph-only model; neither isolates topology specifically, since branch-zeroing does not
+separate topology from node information and complementarity is a statement about a separate
+model, not the fusion model's behavior. We report this as an open, only partly explained
+disagreement, not a correction to the numbers above and not evidence the graph helps once
+weighted correctly.
 
 \textbf{Why richer relations might behave differently.} A relation that is not a function of
 the node features -- for example, which segments belong to the same repeated section, or

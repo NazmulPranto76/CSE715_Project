@@ -16,51 +16,47 @@ h_i^{(l+1)} = \sigma\big(W^{(l)} \cdot \mathrm{CONCAT}(h_i^{(l)}, \mathrm{MEAN}_
 \]
 (the implementation applies $\sigma$ and dropout between layers, not after the final one,
 omitted above for brevity) before mean-pool readout $g = \tfrac{1}{|V|}\sum_i h_i^{(L)}$.
-Three controls probe what the graph branch contributes, though none isolates topology cleanly
-on its own (Section~\ref{sec:protocol} discloses each control's specific confound): a CNN
+Three controls probe what the graph branch contributes, though none isolates topology
+cleanly (Section~\ref{sec:protocol} discloses each control's specific confound): a CNN
 baseline, following the standard convolutional auto-tagging approach for spectrogram-based
-audio classification \cite{choi2016autotagging,won2020evaluation}, with no graph and no
-shared features at all; an edge-free set encoder that replaces every GraphSAGE layer with a
-per-node MLP of identical width and depth, keeping the same node features and readout but
-removing every edge (changes the aggregation operator along with topology); and a
-non-learned exact 2-hop neighbor aggregation, which uses the same topology as GraphSAGE and
-no trained message-passing function, but also a different training recipe for its classifier
-head (Section~\ref{sec:discussion}). The cleaner topology-only intervention this paper
-relies on for that narrower question is a same-architecture real/shuffled/random-edge
-factorial from a companion audit \cite{tismir_audit} (Section~\ref{sec:results-t2}), which
-changes edges alone.
+classification \cite{choi2016autotagging,won2020evaluation}, with no graph or shared
+features; an edge-free set encoder replacing every GraphSAGE layer with a per-node MLP of
+identical width/depth, keeping the same node features and readout but removing every edge
+(changes the aggregation operator along with topology); and a non-learned exact 2-hop
+neighbor aggregation, using GraphSAGE's topology and no trained message-passing function, but
+a different training recipe for its head (Section~\ref{sec:discussion}). The cleaner
+topology-only intervention this paper relies on is a same-architecture
+real/shuffled/random-edge factorial from a companion audit \cite{tismir_audit}
+(Section~\ref{sec:results-t2}), changing edges alone.
 
 \subsection{Task 3: fusion strategies and diagnostics}
 The same GNN and BERT component \emph{architectures} as Tasks 1 and 2 (not their trained
-weights, which are separate, freshly-initialized instances for Task 3) are combined four
-ways: \textit{bert\_only} (text alone),
-\textit{gnn\_only} (graph alone), \textit{concat} ($z=\mathrm{CONCAT}(g,t)$), and
-\textit{cross\_attention} ($A=\mathrm{softmax}(QK^\top/\sqrt{d})$, $Q=gW_Q$, $K=H_{\mathrm{text}}W_K$,
+weights, separate freshly-initialized instances for Task 3) are combined four ways:
+\textit{bert\_only} (text alone), \textit{gnn\_only} (graph alone), \textit{concat}
+($z=\mathrm{CONCAT}(g,t)$), and \textit{cross\_attention}
+($A=\mathrm{softmax}(QK^\top/\sqrt{d})$, $Q=gW_Q$, $K=H_{\mathrm{text}}W_K$,
 $V=H_{\mathrm{text}}W_V$, $z=\mathrm{CONCAT}(g, AV)$; the implementation also adds a padding
-mask to the attention logits $QK^\top/\sqrt{d}$ before the softmax that produces $A$, omitted
-above for brevity, so padded caption tokens receive zero attention weight). Two diagnostics go beyond the four-way comparison
-itself. \textbf{Branch zeroing}: inside a trained \textit{concat} model, the graph embedding
-$g$ is replaced with zeros at evaluation time, with no retraining, isolating what the graph
-branch contributes conditional on text already being present. \textbf{Complementarity
-cross-tabulation}: per-(example, tag) predictions from the trained \textit{bert\_only} and
-\textit{gnn\_only} checkpoints are compared directly, to test whether the graph model is
-right on a distinct subset of cases the text model gets wrong, rather than only comparing
-aggregate scores.
+mask to $QK^\top/\sqrt{d}$ before the softmax producing $A$, omitted above for brevity, so
+padded tokens receive zero attention). Two diagnostics go beyond the four-way comparison.
+\textbf{Branch zeroing}: inside a trained \textit{concat} model, the graph embedding $g$ is
+replaced with zeros at evaluation time, no retraining, isolating what the graph branch
+contributes given text is already present. \textbf{Complementarity cross-tabulation}:
+per-(example, tag) predictions from \textit{bert\_only} and \textit{gnn\_only} are compared
+directly, testing whether the graph model is right on cases text gets wrong, rather than only
+comparing aggregate scores.
 
 \subsection{Task 4: contrastive dual encoder and controls}
 A CLIP-style \cite{radford2021clip} dual encoder pairs the same GNN and BERT components under
 a symmetric InfoNCE objective \cite{oord2018infonce}. The same two-tower, contrastive design
-underlies music-specific audio-text systems -- MuLan \cite{huang2022mulan} and the
-contrastive audio-language model of Manco et al.~\cite{manco2022contrastive} -- as well as
-general-purpose audio-language systems not specific to music, such as CLAP
-\cite{elizalde2023clap}; the same objective is used for text-to-music retrieval specifically
-by Doh et al.~\cite{doh2023universal}; this task follows that same
-general design at a much smaller scale, with the two towers built from this paper's own GNN
-and BERT components rather than the larger pretrained encoders those systems use -- the
-implementation averages this audio-to-text direction with the
-text-to-audio direction (swapping which side is summed over in the denominator), giving the
-loss $\mathcal{L} = \tfrac{1}{2}(\mathcal{L}_{\mathrm{a2t}} + \mathcal{L}_{\mathrm{t2a}})$
-its "symmetric" name; one direction is shown here for brevity:
+underlies music-specific audio-text systems -- MuLan \cite{huang2022mulan} and Manco et
+al.'s contrastive audio-language model \cite{manco2022contrastive} -- and general-purpose
+audio-language systems, such as CLAP \cite{elizalde2023clap}; the same objective is used for
+text-to-music retrieval by Doh et al.~\cite{doh2023universal}. This task follows that design
+at a much smaller scale, with both towers built from this paper's own GNN and BERT components
+rather than larger pretrained encoders -- averaging the audio-to-text direction with
+text-to-audio (swapping which side sums in the denominator) gives the loss $\mathcal{L} =
+\tfrac{1}{2}(\mathcal{L}_{\mathrm{a2t}} + \mathcal{L}_{\mathrm{t2a}})$ its "symmetric" name;
+one direction shown for brevity:
 \[
 \mathcal{L}_{\mathrm{a2t}} = -\frac{1}{N}\sum_i \log\frac{\exp(\mathrm{sim}(g_i,t_i)/\tau)}{\sum_j \exp(\mathrm{sim}(g_i,t_j)/\tau)}.
 \]

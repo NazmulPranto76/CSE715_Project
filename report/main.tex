@@ -5,6 +5,14 @@
 \usepackage{hyperref}
 \usepackage{cite}
 
+% Standard, content-neutral space tightening (whitespace only, no text/citation changes):
+\setlength{\textfloatsep}{6pt plus 1pt minus 1pt}
+\setlength{\intextsep}{6pt plus 1pt minus 1pt}
+\setlength{\floatsep}{4pt plus 1pt minus 1pt}
+\setlength{\abovecaptionskip}{3pt}
+\setlength{\belowcaptionskip}{2pt}
+\renewcommand{\IEEEbibitemsep}{0pt plus .3pt}
+
 \begin{document}
 
 \title{When Do Music Graphs Matter?\\
@@ -29,7 +37,9 @@ nazmul.islam1@bracu.ac.bd, md.khaliduzzaman@bracu.ac.bd, atanu.roy@bracu.ac.bd}
 \input{sections/08_discussion}
 \input{sections/09_conclusion}
 
+{\small
 \bibliographystyle{IEEEtran}
 \bibliography{references}
+}
 
 \end{document}
