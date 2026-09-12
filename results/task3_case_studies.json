@@ -2,176 +2,6 @@
   "description": "3 case studies for Task 3, selected as the first 3 test examples (dataset order) where concat and bert_only disagree on at least one predicted tag. 'graph_structure' lists non-adjacent segment pairs connected by a similarity edge (beyond the trivial temporal chain), so a reader can check directly whether the graph's extra edges have any visible relationship to the prediction difference.",
   "case_studies": [
     {
-      "index": 0,
-      "track_id": "0bP2MH3LqvI",
-      "caption": "This song features a piano melody being played. It is played on an ascending scale. The sound of a plane propeller is played on top of this music. At the end; a male voice is heard in a narrating tone. There are no other instruments in this song and no vocal melody is sung in this clip. This music can be played in a classic silent movie.",
-      "ground_truth_tags": [
-        "moderate tempo"
-      ],
-      "graph_structure": {
-        "n_nodes": 10,
-        "n_temporal_edges": 18,
-        "n_similarity_edges_nonadjacent": 36,
-        "similarity_pairs": [
-          [
-            0,
-            2
-          ],
-          [
-            0,
-            3
-          ],
-          [
-            0,
-            4
-          ],
-          [
-            0,
-            5
-          ],
-          [
-            0,
-            6
-          ],
-          [
-            0,
-            7
-          ],
-          [
-            0,
-            8
-          ],
-          [
-            0,
-            9
-          ],
-          [
-            1,
-            3
-          ],
-          [
-            1,
-            4
-          ],
-          [
-            1,
-            5
-          ],
-          [
-            1,
-            6
-          ],
-          [
-            1,
-            7
-          ],
-          [
-            1,
-            8
-          ],
-          [
-            1,
-            9
-          ],
-          [
-            2,
-            4
-          ],
-          [
-            2,
-            5
-          ],
-          [
-            2,
-            6
-          ],
-          [
-            2,
-            7
-          ],
-          [
-            2,
-            8
-          ],
-          [
-            2,
-            9
-          ],
-          [
-            3,
-            5
-          ],
-          [
-            3,
-            6
-          ],
-          [
-            3,
-            7
-          ],
-          [
-            3,
-            8
-          ],
-          [
-            3,
-            9
-          ],
-          [
-            4,
-            6
-          ],
-          [
-            4,
-            7
-          ],
-          [
-            4,
-            8
-          ],
-          [
-            4,
-            9
-          ],
-          [
-            5,
-            7
-          ],
-          [
-            5,
-            8
-          ],
-          [
-            5,
-            9
-          ],
-          [
-            6,
-            8
-          ],
-          [
-            6,
-            9
-          ],
-          [
-            7,
-            9
-          ]
-        ]
-      },
-      "concat_predicted_tags": [
-        "male voice",
-        "slow tempo"
-      ],
-      "bert_only_predicted_tags": [
-        "male voice"
-      ],
-      "tags_only_concat_gets": [
-        "slow tempo"
-      ],
-      "tags_only_bert_gets": []
-    },
-    {
       "index": 6,
       "track_id": "U-UF93NA3ko",
       "caption": "The low quality recording features a rock song that consists passionate male vocal, alongside, harmonizing background vocals, singing over shimmering wide cymbals, bouncy snare hits, soft kick hits, electric rhythm guitar melody in the left channel, groovy bass guitar, acoustic rhythm guitar in the right channel of the stereo image and some wide toms roll. It sounds addictive and energetic.",
@@ -331,7 +161,7 @@
         ]
       },
       "concat_predicted_tags": [
-        "emotional",
+        "energetic",
         "groovy",
         "groovy bass",
         "low quality",
@@ -341,12 +171,15 @@
         "groovy",
         "groovy bass",
         "low quality",
-        "passionate"
+        "punchy snare"
       ],
       "tags_only_concat_gets": [
-        "emotional"
+        "energetic",
+        "passionate"
       ],
-      "tags_only_bert_gets": []
+      "tags_only_bert_gets": [
+        "punchy snare"
+      ]
     },
     {
       "index": 7,
@@ -507,17 +340,198 @@
         ]
       },
       "concat_predicted_tags": [
-        "groovy"
+        "energetic",
+        "groovy",
+        "live performance"
       ],
       "bert_only_predicted_tags": [
         "energetic",
         "groovy",
         "medium tempo"
       ],
+      "tags_only_concat_gets": [
+        "live performance"
+      ],
+      "tags_only_bert_gets": [
+        "medium tempo"
+      ]
+    },
+    {
+      "index": 10,
+      "track_id": "8zcogfmAD_o",
+      "caption": "A woman talks before the beginning of the music track. The song is instrumental with a trumpet playing a swing melody accompanied by a brass band and jazz orchestra. The tempo is medium with a walking bass line, piano accompaniment, steady rhythm and clapping percussion. The song is a classic swing jazz tune.",
+      "ground_truth_tags": [
+        "instrumental music"
+      ],
+      "graph_structure": {
+        "n_nodes": 10,
+        "n_temporal_edges": 18,
+        "n_similarity_edges_nonadjacent": 36,
+        "similarity_pairs": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            0,
+            9
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            8
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            7,
+            9
+          ]
+        ]
+      },
+      "concat_predicted_tags": [
+        "live performance",
+        "medium tempo",
+        "passionate"
+      ],
+      "bert_only_predicted_tags": [
+        "emotional",
+        "instrumental music",
+        "live performance",
+        "medium tempo",
+        "passionate",
+        "poor audio quality"
+      ],
       "tags_only_concat_gets": [],
       "tags_only_bert_gets": [
-        "energetic",
-        "medium tempo"
+        "emotional",
+        "instrumental music",
+        "poor audio quality"
       ]
     }
   ]

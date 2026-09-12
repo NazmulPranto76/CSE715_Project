@@ -154,12 +154,23 @@ results/checkpoints/*.pt
 
 | Task | Model | Dataset | Test samples | Main metric | Result |
 |---|---|---|---|---|---|
-| 1 | DistilBERT | MusicCaps | 250 | Macro-F1 | 0.566 |
+| 1 | DistilBERT | MusicCaps | 250 | Macro-F1 | 0.727 |
 | 2 | GraphSAGE (GNN) | GTZAN | 150 | Macro-F1 | 0.616 |
 | 2 | CNN (mel-spectrogram) | GTZAN | 150 | Macro-F1 | 0.762 |
-| 3 | BERT+GNN concat | MusicCaps | 673 | Macro-F1 | 0.722 |
-| 3 | BERT+GNN cross-attention | MusicCaps | 673 | Macro-F1 | 0.687 |
+| 3 | BERT only | MusicCaps | 673 | Macro-F1 | 0.787 |
+| 3 | GNN only | MusicCaps | 673 | Macro-F1 | 0.187 |
+| 3 | BERT+GNN concat | MusicCaps | 673 | Macro-F1 | 0.777 |
+| 3 | BERT+GNN cross-attention | MusicCaps | 673 | Macro-F1 | 0.760 |
 | 4 | GNN+BERT contrastive | MusicCaps | 673 | Audio->Text R@10 | 0.086 |
+
+Task 1 and Task 3 were retrained with a larger epoch budget after checking their validation
+curves showed they were still improving, not plateaued, at the original cutoffs (6 and 10
+epochs respectively -- see `config.py`'s `TASK1_EPOCHS`/`TASK3_EPOCHS` comments). Task 2 and
+Task 4 were left as-is; their validation curves had already plateaued. Note that even at this
+larger budget, BERT alone (0.787) still beats both fusion modes (0.777, 0.760) here, and the
+graph-only model badly underperforms (0.187) -- the same qualitative pattern
+`report/final_report.pdf` reports from the other codebase, now also visible in this repo's
+own, independently-trained numbers.
 
 This table is this repo's own Task 1-4 pipeline, at its own (smaller) data scale --
 `report/final_report.pdf` reports different, larger-scale numbers for Tasks 1-3 from a

@@ -3,7 +3,7 @@
   "dataset": "MusicCaps captions",
   "num_test_examples": 250,
   "num_tags": 30,
-  "macro_f1": 0.5661122002302914,
-  "micro_f1": 0.594409024031388,
-  "auc_pr_macro": 0.7555439847466344
+  "macro_f1": 0.7271303191473846,
+  "micro_f1": 0.7510204081632653,
+  "auc_pr_macro": 0.7986000766302271
 }

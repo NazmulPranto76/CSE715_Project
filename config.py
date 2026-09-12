@@ -51,7 +51,7 @@ TASK1_TRAIN_SIZE = 1200         # small subset so training finishes quickly
 TASK1_VAL_SIZE = 250
 TASK1_TEST_SIZE = 250
 TASK1_BATCH_SIZE = 16
-TASK1_EPOCHS = 6
+TASK1_EPOCHS = 20               # was 6 -- validation macro-F1 was still rising at epoch 6
 TASK1_LR = 2e-5
 
 # ---------------------------------------------------------------------
@@ -83,7 +83,7 @@ TASK3_VAL_FRACTION = 0.15
 TASK3_TEST_FRACTION = 0.15
 TASK3_ATTN_DIM = 128
 TASK3_BATCH_SIZE = 16
-TASK3_EPOCHS = 10
+TASK3_EPOCHS = 25               # was 10 -- validation macro-F1 was still rising at epoch 10
 TASK3_LR = 5e-5
 
 # ---------------------------------------------------------------------

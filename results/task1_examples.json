@@ -5,8 +5,6 @@
       "male voice"
     ],
     "predicted_tags": [
-      "slow tempo",
-      "piano",
       "male voice",
       "moderate tempo"
     ]
@@ -34,11 +32,9 @@
     ],
     "predicted_tags": [
       "low quality",
-      "emotional",
       "noisy",
       "passionate",
-      "live performance",
-      "mono"
+      "live performance"
     ]
   },
   {
@@ -52,8 +48,6 @@
     ],
     "predicted_tags": [
       "instrumental",
-      "emotional",
-      "slow tempo",
       "acoustic guitar",
       "piano"
     ]
@@ -69,9 +63,7 @@
       "amateur recording",
       "slow tempo",
       "electric guitar",
-      "acoustic guitar",
-      "male voice",
-      "moderate tempo"
+      "acoustic guitar"
     ]
   }
 ]
