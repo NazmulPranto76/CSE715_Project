@@ -1,0 +1,18 @@
+{
+  "epochs": 10,
+  "seed": 42,
+  "note": "PyTorch determinism was not forced (no torch.use_deterministic_algorithms), so exact macro-F1 can vary slightly between runs with the same seed; the qualitative conclusion (a larger effect than the primary evidence base's 0.0088 / 0.6%, present even at this shorter epoch budget) was checked to hold across more than one run.",
+  "branch_zeroing": {
+    "correct_macro_f1": 0.7230896081147873,
+    "null_graph_macro_f1": 0.5558856415728773,
+    "graph_contribution_macro_f1": 0.16720396654190994,
+    "pct_individual_predictions_changed": 7.58791480931154
+  },
+  "complementarity": {
+    "total_bert_wrong_gnn_right": 427,
+    "genuine_rescue_true_positive": 142,
+    "trivial_rescue_true_negative": 285,
+    "genuine_rescue_fraction": 0.3325526932084309,
+    "gnn_only_overall_accuracy": 0.5991084695393759
+  }
+}

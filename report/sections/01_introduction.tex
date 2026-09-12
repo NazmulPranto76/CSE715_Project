@@ -66,7 +66,10 @@ branch-zeroing (an inference-time intervention on the trained fusion model, find
 on the graph branch only slightly) and complementarity (correlational,
 comparing two separately-trained single-branch models, finding almost no positive-label
 rescue by the graph-only model) -- together find the graph contributing
-little the fusion model actually ends up relying on. Task 4 shows no consistent advantage
+little the fusion model actually ends up relying on, in this evidence base; a follow-up check
+in a second implementation did not confirm this for Task 3, and Section~\ref{sec:discussion}
+reports that disagreement openly rather than alongside only the reading that fits the
+pattern. Task 4 shows no consistent advantage
 either way across three seeds. We report this consistency, with each result's own caveats, as
 the paper's main finding. We also check two alternative explanations that could produce this
 pattern without the graph itself being at fault -- caption text directly leaking target

@@ -7,7 +7,9 @@ specific evidence differs by task, and we do not claim it is uniform. Task 2's
 pooling-matched comparison favors the edge-free encoder directly. Task 3's own standalone
 graph-vs-edge-free comparison is mixed and pooling-dependent and is \emph{not} the evidence
 we rely on there; its branch-zeroing and complementarity diagnostics, both on held-out test
-data, are what show little reliance on the graph. Task 4 shows no reliable difference across
+data, are what show little reliance on the graph -- in this evidence base specifically, since
+a follow-up check later in this section found the opposite in a second implementation and we
+have not resolved which reading generalizes. Task 4 shows no reliable difference across
 three seeds. Tasks 2 and 4 rely directly on width/depth-matched, lower-parameter edge-free
 controls; Task 3 also has such a control, but only at validation, so its relied-upon
 test-set evidence comes from branch-zeroing and complementarity instead, neither of which is
@@ -81,23 +83,31 @@ examples (the first 20 qualifying cases in test order), and one unblinded rater 
 predefined rubric, so it does not rule out the effect entirely, only that it is not large
 enough to be obvious on a direct look.
 
-\textbf{A follow-up check that did not confirm the Task 3 finding, and why.} We reran Task
-3's branch-zeroing and complementarity diagnostics in a second, independent implementation of
-this same architecture family -- the one Task 4's own numbers are drawn from -- and did not
-get the same answer. There, removing the graph branch costs 0.12--0.17 macro-F1, not 0.0088,
-and the complementarity check finds 33--47\% genuine rescue, not 0.6\%. Both readings are real
-measurements, not a mistake in either one, so this needed an explanation rather than a choice
-of which number to believe. We found one: that implementation trains all four fusion modes,
-including \textit{gnn\_only}, with positive-class weighting, while the \textit{gnn\_only}
-checkpoint behind this section's complementarity numbers was trained without it and had
-collapsed to predicting a tag present for only 5 of its 50 tags. We checked this was not
-simply about how long training ran, by retraining the second implementation's \textit{concat}
-and \textit{gnn\_only} models for the same short number of epochs used before -- the larger
-effect was still there. We are reporting this as an open question about how sensitive this
-particular finding is to a class-weighting choice, not as a reason to doubt the branch-zeroing
-and complementarity numbers reported above, and not as evidence that the graph actually does
-help once weighted correctly -- we did not attempt to settle which weighting choice is the
-right one for this diagnostic, and leave that for further work.
+\textbf{A follow-up check that complicates the Task 3 finding, and what we do and do not know
+about why.} We reran Task 3's branch-zeroing and complementarity diagnostics in a second,
+independent implementation of this same architecture family -- the one Task 4's own numbers
+are drawn from -- and did not get the same answer. There, removing the graph branch costs
+0.12 macro-F1 at that implementation's own epoch budget and roughly 0.16--0.17 macro-F1 when
+retrained at the shorter epoch budget used before (not exactly reproducible between runs, in
+the same vein as Table~\ref{tab:task2-full}'s 2-hop result above); the complementarity check
+finds 169 of 359 rescued cells (47.1\%) genuine at the longer budget and 142 of 427 (33.3\%)
+at the shorter one, both well above the 3 of 508 (0.6\%) reported above. Both readings are
+real measurements, not a mistake in either one, so this needed an explanation rather than a
+choice of which number to believe. Retraining at the shorter epoch budget still showing the
+larger effect rules out training duration specifically. One plausible remaining contributor
+is class weighting: unlike the checkpoint behind this section's complementarity numbers
+(trained without positive-class weighting and collapsed to predicting a tag present for only
+5 of its 50 tags), the second implementation trains all four fusion modes, including
+\textit{gnn\_only}, with positive-class weighting throughout. We have not isolated weighting
+as the cause, though: the two implementations also differ in split size, tag vocabulary
+(50 tags here, 30 there), and segment length, and we did not run a weighted-versus-unweighted
+comparison within one implementation to separate weighting from these other differences. What
+the second implementation's numbers do show is that its trained model relies on its graph
+branch more than this section's does; they do not show that graph topology specifically, as
+opposed to the extra node-level information the branch carries, is what it relies on, since
+branch-zeroing does not separate the two. We report this as an open, only partly explained
+disagreement between two implementations of the same task, not as a correction to the
+numbers reported above and not as evidence that the graph helps once weighted correctly.
 
 \textbf{Why richer relations might behave differently.} A relation that is not a function of
 the node features -- for example, which segments belong to the same repeated section, or

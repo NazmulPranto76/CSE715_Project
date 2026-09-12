@@ -13,6 +13,7 @@ budget) to separate "_ctrl10" checkpoint files, without touching the real
 against these control checkpoints.
 """
 
+import json
 import sys
 import time
 from pathlib import Path
@@ -165,6 +166,32 @@ def main():
     print(f"total_rescued={total}  genuine={genuine}  trivial={trivial}  "
           f"genuine_fraction={genuine/total if total else 0:.4f}")
     print(f"gnn_only overall accuracy={np.mean(gnn_correct):.4f}")
+
+    out = {
+        "epochs": CTRL_EPOCHS,
+        "seed": config.SEED,
+        "note": "PyTorch determinism was not forced (no torch.use_deterministic_algorithms), "
+                "so exact macro-F1 can vary slightly between runs with the same seed; the "
+                "qualitative conclusion (a larger effect than the primary evidence base's "
+                "0.0088 / 0.6%, present even at this shorter epoch budget) was checked to hold "
+                "across more than one run.",
+        "branch_zeroing": {
+            "correct_macro_f1": f1s["correct"],
+            "null_graph_macro_f1": f1s["null_graph"],
+            "graph_contribution_macro_f1": f1s["correct"] - f1s["null_graph"],
+            "pct_individual_predictions_changed": pct_changed,
+        },
+        "complementarity": {
+            "total_bert_wrong_gnn_right": total,
+            "genuine_rescue_true_positive": genuine,
+            "trivial_rescue_true_negative": trivial,
+            "genuine_rescue_fraction": genuine / total if total else None,
+            "gnn_only_overall_accuracy": float(np.mean(gnn_correct)),
+        },
+    }
+    out_path = config.RESULTS_DIR / "task3_control_epoch_check.json"
+    out_path.write_text(json.dumps(out, indent=2))
+    print(f"\nSaved: {out_path}")
 
 
 if __name__ == "__main__":

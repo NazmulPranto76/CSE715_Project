@@ -111,9 +111,12 @@ graph embedding with zeros inside the trained \textit{concat} model changes only
 (0.7055 $\to$ 0.6967; this 0.7055 is the branch-diagnostic run's own re-measurement of
 \textit{concat}, negligibly different from the 0.7061 in Table~II above); zeroing the text
 branch instead costs 0.6779 macro-F1, confirming text is overwhelmingly the informative
-branch. This diagnostic is reproduced directly from this repository
-(\texttt{task3\_branch\_zeroing.py}), rather than only cited from an earlier, separate
-diagnostic script, so it is independently re-derivable here.
+branch. This 0.0088 figure comes from the primary evidence base described in
+Section~\ref{sec:data}. A script with the same name in the accompanying repository now
+computes a different number against that repository's own checkpoints, as part of a disclosed
+follow-up check that did not confirm this reading (Section~\ref{sec:discussion}) -- the two
+are not interchangeable, and we name this explicitly rather than let a shared filename imply
+they are.
 \textbf{Complementarity}: cross-tabulating \textit{bert\_only} against
 \textit{gnn\_only} predictions -- two separately-trained, single-branch models, not the
 fusion model itself (35{,}750 (example, tag) cells, 715 test examples $\times$ 50 tags) --
@@ -124,8 +127,9 @@ real, if modest, complementary signal. It is not: this checkpoint's own per-tag 
 recall (Table~\ref{tab:task3-full}'s source metrics) are exactly 0.0 for 45 of 50 tags -- it
 predicts a tag present at all for only 5 of them -- so most of its "correct" cells are true
 negatives reached by never predicting positive, not audio-based detection. Splitting the 508
-rescued cells by label polarity (a follow-up check,
-\texttt{task3\_complementarity\_by\_polarity.py}) confirms this directly: only
+rescued cells by label polarity (the same kind of check described for the accompanying
+repository's own numbers in Section~\ref{sec:discussion}, applied here to the primary
+evidence base's checkpoints) confirms this directly: only
 \textbf{3 of 508} (0.6\%) are the graph model actually producing a true positive where text
 produced a false negative; the remaining \textbf{505 of 508} (99.4\%) are the graph model
 defaulting to "absent" while text wrongly said "present" -- consistent with a checkpoint
@@ -134,8 +138,8 @@ prove no audio signal contributed to it. A separate way to see the same point: a
 always-predict-absent classifier would, by construction, be "correct" on every one of the 509
 cells where text has a false positive, a 509-of-1{,}047 (48.6\%) rescue rate -- essentially
 the same as the 48.5\% actually observed, so the headline number does not distinguish this
-checkpoint from a trivial one. We withdraw the "not zero" reading an earlier draft of this
-diagnostic gave it. It is also
+checkpoint from a trivial one, and we do not read it as evidence of real complementary
+signal. It is also
 outnumbered by the reverse: 1{,}735 cells where
 text is right and the graph model is wrong. This cross-tabulation is correlational -- it
 compares two independently trained models, not an intervention on either one. Branch-zeroing

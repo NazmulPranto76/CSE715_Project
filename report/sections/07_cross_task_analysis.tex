@@ -62,7 +62,10 @@ what this diagnostic does and does not establish about training-time causation).
 finds only three positive-label rescues -- too few to establish meaningful complementary
 detection; branch-zeroing finds
 the fusion model relies on the graph branch only slightly, not not at all. Both point to weak
-graph reliance, at two different levels of evidence.
+graph reliance in this evidence base, at two different levels of evidence -- though
+Section~\ref{sec:discussion} reports that a second implementation, applying both diagnostics
+to its own checkpoints, found substantially more reliance, an unresolved disagreement we do
+not paper over here.
 
 \textbf{Text dominance and graph weakness are separate findings, not one explanation for the
 other.} Caption text leaks a substantial fraction of target labels directly (69.1\%

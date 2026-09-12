@@ -29,7 +29,9 @@ graph-only model correcting 48.5\% of the text-only model's errors, but splittin
 label polarity shows the graph-only model predicts a tag present at all for only 5 of 50
 tags; fewer than 1\% of its apparent corrections are it actually detecting a tag the text
 model missed, and the rest are it defaulting to "absent" while text wrongly said "present" --
-this diagnostic, as originally framed, does not show real complementary signal. In
+this diagnostic, as originally framed, does not show real complementary signal -- a follow-up
+check in a second implementation did not confirm this reading for Task 3, and we report why
+in the Discussion rather than pick one answer. In
 retrieval, a graph-based and a no-graph encoder show no reliable difference across three
 training seeds, on every reported metric. We also checked two alternative explanations
 rather than assume them away: caption text leaking target labels directly (it does,

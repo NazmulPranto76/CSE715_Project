@@ -37,8 +37,8 @@ features, optimizer, learning rate, batch size, epoch budget, and evaluation cod
 exception, found on inspection of the training scripts rather than assumed away: Task 2's
 GraphSAGE training call does not pass its configured dropout value (0.4) through to the
 model, so it silently trains at the model class's default of 0.2, while the edge-free
-encoder is passed the configured 0.4 explicitly -- so this comparison is not dropout-matched
-as the paper's earlier drafts assumed, on top of the aggregation-operator difference
+encoder is passed the configured 0.4 explicitly -- so this comparison is not dropout-matched,
+on top of the aggregation-operator difference
 discussed next. We disclose this rather than silently correct it after the fact (correcting
 it would mean retraining GraphSAGE and changing every Task 2 number that depends on it);
 Section~\ref{sec:cross-task} discusses what this does and does not imply for the smallest

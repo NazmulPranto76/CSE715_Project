@@ -66,15 +66,18 @@ project_submission_simple/
   report/                         <- the final report (LaTeX source + final_report.pdf)
 ```
 
-**A note on the diagnostic scripts above the `scripts/` line.** Most of them (`task4_*`,
-`task3_case_studies.py`) run fine from this repo, same as the main Task 1-4 pipeline. Five of
-them (`task2_exact_2hop_control.py`, `task3_branch_zeroing.py`,
-`task3_complementarity_by_polarity.py`, `task3_complementarity_diagnostic.py`,
-`gtzan_duplicate_audit.py`) were originally written against a second, larger research
-codebase's config format, data splits, and checkpoints (the one `report/final_report.pdf`
-actually reports Task 1-3 numbers from) -- they're included here for direct inspection and
-because the report cites them, but running them end-to-end needs that codebase's
-`config.yaml`, `data/splits/`, and `results/checkpoints/`, not just what ships in this repo.
+**A note on the diagnostic scripts above the `scripts/` line.** Most of them run fine from
+this repo against this repo's own checkpoints, including `task3_branch_zeroing.py`,
+`task3_complementarity_diagnostic.py`, `task3_complementarity_by_polarity.py`, and
+`task3_control_epoch_check.py` -- these compute this repo's *own* Task 3 numbers, which
+`report/final_report.pdf`'s Discussion section reports as a follow-up check that disagreed
+with its primary Task 3 finding (see that section for why). Two scripts,
+`task2_exact_2hop_control.py` and `gtzan_duplicate_audit.py`, were written against a second,
+larger research codebase's config format, data splits, and checkpoints (the one
+`report/final_report.pdf` reports its *primary* Task 1-3 numbers from) -- they're included
+here for direct inspection and because the report cites them, but running them end-to-end
+needs that other codebase's `config.yaml`, `data/splits/`, and `results/checkpoints/`, not
+just what ships here.
 
 ## 2. Datasets
 
@@ -174,9 +177,13 @@ own, independently-trained numbers.
 
 This table is this repo's own Task 1-4 pipeline, at its own (smaller) data scale --
 `report/final_report.pdf` reports different, larger-scale numbers for Tasks 1-3 from a
-separate codebase (see the note above), and is the source to cite for the project's actual
-findings, including the direct test of whether the graph branch matters at all in Tasks 2/3/4
-(short answer: not detectably, in any of the three).
+separate codebase (see the note above), and is the source to cite for the actual findings,
+including the direct test of whether the graph branch matters at all in Tasks 2/3/4: not
+detectably for Task 2 or Task 4, but Task 3 is unresolved -- this repo's own branch-zeroing
+and complementarity checks (`task3_branch_zeroing.py`,
+`task3_complementarity_by_polarity.py`) find a real graph contribution here, disagreeing with
+`report/final_report.pdf`'s primary Task 3 evidence; the Discussion section explains what we
+do and do not know about why.
 
 ## 7. Demo notebook
 

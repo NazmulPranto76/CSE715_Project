@@ -17,12 +17,13 @@ established loss.
 One qualifier matters here. Task 2's non-learned exact 2-hop control, whose aggregation is
 fixed rather than trained, does clearly beat every edge-free number -- a genuine complication,
 discussed in Section~\ref{sec:discussion}, not swept into "graph-based model" for
-convenience. Task 3's own standalone comparison was mixed and inconclusive on its own; the
-evidence for little graph reliance there instead comes from two diagnostics on the trained
-fusion model and its parts -- branch-zeroing (an inference-time intervention directly on the
-fusion model) and complementarity (correlational, comparing two separately-trained
-single-branch models) -- not
-from that standalone number. Task 4 showed no consistent advantage either way across three
+convenience. Task 3's own standalone comparison was mixed and inconclusive on its own; in this
+evidence base, branch-zeroing and complementarity -- an inference-time intervention on the
+trained fusion model, and a correlational comparison of two separately-trained single-branch
+models, respectively -- both point to little graph reliance instead. Section~\ref{sec:discussion}
+also reports that the same two diagnostics, run against a second implementation's own
+checkpoints, found substantially more reliance -- an unresolved disagreement between
+implementations, not a second confirmation of the first. Task 4 showed no consistent advantage either way across three
 seeds; with only three runs and no formal equivalence test, that is an absence of detected
 difference, not proof of none.
 
