@@ -1,0 +1,126 @@
+{
+  "n_files_hashed": 1000,
+  "n_exact_duplicate_pairs": 14,
+  "n_cross_split_leakage_pairs": 7,
+  "n_cross_genre_label_pairs": 1,
+  "n_test_tracks_with_a_train_duplicate": 3,
+  "test_tracks_with_a_train_duplicate": [
+    "hiphop.00039",
+    "metal.00044",
+    "metal.00066"
+  ],
+  "pairs": [
+    {
+      "track_a": "disco.00098",
+      "track_b": "disco.00099",
+      "split_a": "val",
+      "split_b": "train",
+      "cross_split_leakage": true,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "hiphop.00039",
+      "track_b": "hiphop.00045",
+      "split_a": "test",
+      "split_b": "train",
+      "cross_split_leakage": true,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "hiphop.00076",
+      "track_b": "hiphop.00078",
+      "split_a": "val",
+      "split_b": "val",
+      "cross_split_leakage": false,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "metal.00040",
+      "track_b": "metal.00061",
+      "split_a": "train",
+      "split_b": "train",
+      "cross_split_leakage": false,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "metal.00041",
+      "track_b": "metal.00062",
+      "split_a": "train",
+      "split_b": "train",
+      "cross_split_leakage": false,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "metal.00042",
+      "track_b": "metal.00063",
+      "split_a": "train",
+      "split_b": "val",
+      "cross_split_leakage": true,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "metal.00043",
+      "track_b": "metal.00064",
+      "split_a": "train",
+      "split_b": "val",
+      "cross_split_leakage": true,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "metal.00044",
+      "track_b": "metal.00065",
+      "split_a": "test",
+      "split_b": "train",
+      "cross_split_leakage": true,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "metal.00045",
+      "track_b": "metal.00066",
+      "split_a": "train",
+      "split_b": "test",
+      "cross_split_leakage": true,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "metal.00034",
+      "track_b": "metal.00094",
+      "split_a": "val",
+      "split_b": "train",
+      "cross_split_leakage": true,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "pop.00054",
+      "track_b": "pop.00060",
+      "split_a": "train",
+      "split_b": "train",
+      "cross_split_leakage": false,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "pop.00067",
+      "track_b": "pop.00071",
+      "split_a": "train",
+      "split_b": "train",
+      "cross_split_leakage": false,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "reggae.00081",
+      "track_b": "reggae.00082",
+      "split_a": "train",
+      "split_b": "train",
+      "cross_split_leakage": false,
+      "cross_genre_label": false
+    },
+    {
+      "track_a": "metal.00058",
+      "track_b": "rock.00016",
+      "split_a": "train",
+      "split_b": "train",
+      "cross_split_leakage": false,
+      "cross_genre_label": true
+    }
+  ]
+}

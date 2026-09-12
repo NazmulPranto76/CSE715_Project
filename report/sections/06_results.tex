@@ -1,0 +1,234 @@
+\section{Results}\label{sec:results}
+
+\subsection{Task 1: what can text already do?}
+A fine-tuned DistilBERT classifier \cite{sanh2019distilbert} reaches macro-F1 \textbf{0.7091}
+(micro-F1 0.7503, AUC-PR 0.7302) on MusicCaps tag prediction from captions alone, with no
+audio or graph involved. Given the 69.1\% lexical exposure
+measured in Section~\ref{sec:data}, part of this strength is a direct, literal shortcut; a
+caption-sanitization control (target words removed, model retrained) still recovers 84.3\%
+of this score, so the result is not purely a leakage artifact. This is not a numerical
+baseline the other tasks are scored against -- Task 2 uses a different dataset and label
+space, and Task 4 is scored by Recall@K, not macro-F1 -- but it is the qualitative anchor:
+text alone is already strong before any graph is introduced, which is the standard the rest
+of the paper's "does the graph add anything" questions are asked against.
+
+\subsection{Task 2: does topology help audio classification?}\label{sec:results-t2}
+\begin{table}[t]
+\centering
+\caption{Task 2, GTZAN genre classification (150 test tracks). The edge-free encoder uses a
+per-node MLP of matched width and depth in place of every GraphSAGE layer, with no edges;
+this changes the aggregation operator as well as removing topology, a caveat discussed in
+Section~\ref{sec:cross-task}.}
+\footnotesize
+\begin{tabular}{lcc}
+\toprule
+Model & Params & Macro-F1 \\
+\midrule
+CNN (mel-spec., no graph, no text) & -- & \textbf{0.7654} \\
+GraphSAGE (deployed, mean-pool) & 13{,}066 & 0.5976 \\
+Edge-free, mean-pool$^{\dagger}$ & 6{,}922 & 0.6049 \\
+Edge-free, max-pool & 6{,}922 & \textbf{0.6425} \\
+Exact 2-hop (fixed aggr., trained head) & 6{,}858 & 0.6630 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize $^{\dagger}$Pooling-matched to the deployed GraphSAGE row above.}
+\label{tab:task2-full}
+\end{table}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{figures/fig2_task2_comparison.png}
+\caption{Task 2: GTZAN genre classification, graph model vs.\ controls.}
+\label{fig:task2}
+\end{figure}
+The pooling-matched comparison -- both models using mean-pool readout, the fairest single
+comparison in this table -- has the edge-free encoder ahead by \textbf{+0.0072} macro-F1
+(0.6049 vs.\ 0.5976), using 47\% fewer parameters and no edge information at all
+(Figure~\ref{fig:task2}). The edge-free encoder's best result overall, at max-pool, is
+further ahead (+0.045), but that comparison changes both topology and pooling at once and
+should not be read as the clean ablation; we report it because it is the edge-free model's
+genuine best result, not because it is the fairest comparison. Neither reading has the graph
+model ahead. A separate, repaired, pre-verified sparser graph construction (mutual $k$-NN, three regimes,
+three poolings, 8 seeds each, comparing real edges against none/shuffled/random for 27 total
+contrasts \cite{tismir_audit}) likewise found no training-time contrast that reliably favored
+the real graph. Only 18 of these 27 (real-vs-shuffled and real-vs-random, holding the same
+GraphSAGE architecture fixed) are the cleaner topology-only intervention this sentence
+relies on, changing edge identity alone; the remaining 9 (real-vs-none) are a real-vs-edge-free
+comparison like this paper's own Task 2 control, not a topology-isolating one, and are not
+double-counted as topology-only evidence here. Non-learned exact 2-hop aggregation also beats
+GraphSAGE, suggesting part of the gap is not only about topology carrying little signal, but
+about GraphSAGE's learned aggregation not fully using what signal is present -- a distinction
+we return to in Section~\ref{sec:discussion}.
+
+\subsection{Task 3: does the graph complement text?}\label{sec:results-t3}
+\begin{table}[t]
+\centering
+\caption{Task 3, MusicCaps fusion (715 test examples, except the edge-free row, which is
+validation-only -- see note below).}
+\footnotesize
+\begin{tabular}{lccc}
+\toprule
+Mode & Macro-F1 & Micro-F1 & AUC-PR \\
+\midrule
+bert\_only & \textbf{0.7298} & 0.7647 & 0.7485 \\
+gnn\_only (unweighted) & 0.0112 & 0.0290 & 0.0879 \\
+gnn\_only (pos-weighted) & 0.1621 & 0.1839 & 0.1196 \\
+edge-free gnn, pos-w.\ (max)$^{\dagger}$ & 0.1689 & -- & -- \\
+concat & 0.7061 & 0.7478 & 0.7367 \\
+cross\_attention & 0.6951 & 0.7398 & 0.7310 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize $^{\dagger}$Validation set, not test -- see Section~\ref{sec:protocol}.}
+\label{tab:task3-full}
+\end{table}
+Text alone (0.7298) outperforms every fusion mode; neither \textit{concat} (0.7061) nor
+\textit{cross\_attention} (0.6951) improves on it. The edge-free \textit{gnn\_only} control
+was only evaluated on validation, not test, and the pooling-matched comparison here does not
+repeat Task 2's pattern: at mean-pool (matching the deployed GraphSAGE's own pooling), the
+GraphSAGE-equivalent baseline reaches 0.1640 against the edge-free encoder's 0.1599 -- the
+graph slightly \emph{ahead} by +0.0041. Only at max-pool does the edge-free encoder lead
+(0.1689). Both edge-free readings use the same positive-class weighting as the 0.1640
+GraphSAGE-equivalent comparator, so this specific pair is weighting-matched, unlike the
+Table~\ref{tab:task3-full} rows discussed under Class Weighting (Section~\ref{sec:protocol}). We report both honestly rather than quote only the max-pool number: this
+comparison, unlike Task 2's, does not show a clean edge-free advantage once pooling is held
+fixed, and we do not treat it as this task's primary graph-vs-edge-free evidence in either
+direction -- that role belongs to the branch-zeroing and complementarity diagnostics below,
+both computed on the real test set and unaffected by this pooling question.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{figures/fig3_task3_branch_zeroing.png}
+\caption{Task 3: branch-zeroing diagnostic on the trained \textit{concat} fusion model.}
+\label{fig:task3}
+\end{figure}
+
+\textbf{Branch-zeroing} (Figure~\ref{fig:task3}): replacing the
+graph embedding with zeros inside the trained \textit{concat} model changes only
+\textbf{1.66\%} of individual (example, tag) predictions and costs \textbf{0.0088} macro-F1
+(0.7055 $\to$ 0.6967; this 0.7055 is the branch-diagnostic run's own re-measurement of
+\textit{concat}, negligibly different from the 0.7061 in Table~II above); zeroing the text
+branch instead costs 0.6779 macro-F1, confirming text is overwhelmingly the informative
+branch. This diagnostic is reproduced directly from this repository
+(\texttt{task3\_branch\_zeroing.py}), rather than only cited from an earlier, separate
+diagnostic script, so it is independently re-derivable here.
+\textbf{Complementarity}: cross-tabulating \textit{bert\_only} against
+\textit{gnn\_only} predictions -- two separately-trained, single-branch models, not the
+fusion model itself (35{,}750 (example, tag) cells, 715 test examples $\times$ 50 tags) --
+using the standard, unweighted \textit{gnn\_only} checkpoint (macro-F1 0.0112 on this
+multi-label task) finds the graph model correct on 508 of the 1{,}047 cells where text is
+wrong (\textbf{48.5\%}, an apparent "rescue rate"). Taken at face value this looks like
+real, if modest, complementary signal. It is not: this checkpoint's own per-tag precision and
+recall (Table~\ref{tab:task3-full}'s source metrics) are exactly 0.0 for 45 of 50 tags -- it
+predicts a tag present at all for only 5 of them -- so most of its "correct" cells are true
+negatives reached by never predicting positive, not audio-based detection. Splitting the 508
+rescued cells by label polarity (a follow-up check,
+\texttt{task3\_complementarity\_by\_polarity.py}) confirms this directly: only
+\textbf{3 of 508} (0.6\%) are the graph model actually producing a true positive where text
+produced a false negative; the remaining \textbf{505 of 508} (99.4\%) are the graph model
+defaulting to "absent" while text wrongly said "present" -- consistent with a checkpoint
+that mostly does not predict positive at all, though a true negative alone does not strictly
+prove no audio signal contributed to it. A separate way to see the same point: an
+always-predict-absent classifier would, by construction, be "correct" on every one of the 509
+cells where text has a false positive, a 509-of-1{,}047 (48.6\%) rescue rate -- essentially
+the same as the 48.5\% actually observed, so the headline number does not distinguish this
+checkpoint from a trivial one. We withdraw the "not zero" reading an earlier draft of this
+diagnostic gave it. It is also
+outnumbered by the reverse: 1{,}735 cells where
+text is right and the graph model is wrong. This cross-tabulation is correlational -- it
+compares two independently trained models, not an intervention on either one. Branch-zeroing
+above is a causal intervention in a narrower sense: it manipulates the trained fusion model's
+input at inference time and measures the effect on its output, which is different from a
+training-time test of what a fusion model would learn if the graph branch were absent from
+the start (zero may also be an input the model never saw in training, so this measures
+reliance on the branch as currently trained, not its causal contribution under retraining).
+With that scope in mind, it found removing the graph costs only
+0.0088 macro-F1 -- small, but a genuine, measured effect on the fusion model itself, which is
+a different and more direct kind of evidence than the complementarity diagnostic's
+correlational count. One further, more tentative data point: swapping in
+richer, pretrained node features (frozen CNN embeddings, trained for GTZAN genre
+classification, in place of chroma+MFCC) gives a modest gain on a single seed, validation
+only (0.1640 $\to$ 0.1846, +0.0206). This is suggestive that node-feature weakness is at
+least part of the story, but it rests on one run, one embedding source trained for a
+different dataset and label space than the one it is tested on here, and no test-set or
+multi-seed confirmation -- too thin to treat as more than a hint.
+
+\subsection{Task 4: does any graph benefit survive under retrieval?}\label{sec:results-t4}
+\begin{table}[t]
+\centering
+\caption{Task 4, MusicCaps retrieval (673 test examples), mean $\pm$ population standard
+deviation (\texttt{ddof=0}) over 3 seeds.}
+\begin{tabular}{lcc}
+\toprule
+Metric & Real graph & Edge-free \\
+\midrule
+Audio$\to$Text R@1  & 0.0124 $\pm$ 0.0019 & 0.0124 $\pm$ 0.0046 \\
+Audio$\to$Text R@5  & 0.0570 $\pm$ 0.0062 & 0.0589 $\pm$ 0.0046 \\
+Audio$\to$Text R@10 & 0.1025 $\pm$ 0.0053 & 0.1000 $\pm$ 0.0091 \\
+Text$\to$Audio R@1  & 0.0099 $\pm$ 0.0031 & 0.0104 $\pm$ 0.0032 \\
+Text$\to$Audio R@5  & 0.0515 $\pm$ 0.0037 & 0.0570 $\pm$ 0.0101 \\
+Text$\to$Audio R@10 & 0.1030 $\pm$ 0.0125 & 0.1010 $\pm$ 0.0063 \\
+\bottomrule
+\end{tabular}
+\label{tab:task4-full}
+\end{table}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{figures/fig4_task4_retrieval.png}
+\caption{Task 4: retrieval Recall@10, graph vs.\ edge-free encoder.}
+\label{fig:task4}
+\end{figure}
+Across three training seeds, the absolute difference between the real-graph and edge-free
+encoders' means ranges from 0.00000 to 0.00545 across the six reported metrics
+(Figure~\ref{fig:task4}) -- smaller, on every metric, than at least one of the two
+conditions' own population standard deviations (ddof=0), though not always smaller than
+both, so "within one SD" is not a uniformly true or precise description and we do not use
+it. With only three runs and no paired significance or equivalence test computed, the
+defensible statement
+is that we observed no consistent advantage for either encoder in either retrieval
+direction, not a formal proof of equivalence. This is a more informative result than an
+earlier, single-seed check, which happened to show edge-free ahead on audio$\to$text R@10 by
+0.028 and graph-based ahead on text$\to$audio R@10 by 0.015. Neither single-seed gap recurs
+in the three-seed rerun -- both audio$\to$text and text$\to$audio R@10 per-seed gaps range
+only from $-0.013$ to $+0.021$ and $-0.006$ to $+0.010$ respectively, narrower in both
+directions than the corresponding earlier single-seed gap -- so the earlier check's specific
+magnitudes do not repeat, though three seeds is too small a basis to call this a
+formally established difference in variability, only a description of what these three runs
+happened to show.
+Zero-shot tag prediction (embedding tag names as text, with no supervised tag classifier;
+Section~\ref{sec:protocol}) reaches macro-F1 0.146 on the single seed-42 real-graph
+checkpoint -- not the three seeds behind Table~\ref{tab:task4-full}, and without a
+random-encoder control run to confirm this is above chance rather than an artifact of the
+threshold used, so we report the number without the stronger "confirms semantic content"
+claim it might otherwise support. It is, as expected, far below Task 1's supervised
+classifier, for a system that never sees tag or genre labels during training (it does see
+which caption pairs with which clip, which is itself a form of supervision, just not a
+tag/genre label). In a separate, single-seed check on the real-graph encoder only,
+quadrupling the contrastive batch size (32$\to$128, more in-batch negatives per anchor) changed
+R@10 by at most 0.006 in either retrieval direction -- suggestive evidence against batch size
+being the retrieval bottleneck, though this was not repeated for the edge-free encoder or
+across seeds, so we treat it as a secondary observation, not a controlled result on the same
+footing as the three-seed comparison above.
+
+\textbf{Qualitative failure review.} A possible objection to exact-pair retrieval evaluation
+is that a "wrong" top-1 result might still be a semantically reasonable answer, just not the
+one official paired clip -- a false negative of the evaluation protocol, not a real model
+error. We inspected 20 successes (true clip ranked in the top 3) and 20 failures (true clip
+ranked below 10th) manually, comparing each failure's query caption against its top-1
+retrieved clip's own caption. The failures' true-clip ranks are not close misses: median
+rank 166 of 673 (the 20 ranks, sorted, are 28, 47, 49, 52, 82, 86, 100, 102, 136, 150, 182,
+209, 211, 230, 259, 260, 271, 289, 319, 352), ranging from 28 to 352. Reading the caption
+pairs directly, the large
+majority describe clearly different instrumentation, genre, or mood (for example, a
+piano-and-propeller-sound query's top-1 match was a Russian lullaby with vocals; a bagpipes
+query's top-1 match was an electric-guitar duet with two male voices). A small number share a
+coarse category (both instrumental, or both heavy on reverb) without matching in specific
+content. We do not find evidence that exact-pair evaluation is hiding a large population of
+semantically-correct-but-unpaired matches in this system; most inspected failures are
+genuine retrieval errors. This check has real limits worth stating plainly: the 20
+successes and 20 failures are the first 20 qualifying test examples in dataset order, not a
+random or stratified sample, and the captions were read and judged by one of the authors,
+without a blinded rater or a predefined scoring rubric -- so this is a manual sanity check,
+not a formal annotation study, and we report it with that scope.

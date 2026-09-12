@@ -1,0 +1,74 @@
+\section{Introduction}
+
+Music understanding systems increasingly combine several kinds of input: a natural-language
+description of a track, and the track's own audio. Audio is often turned into a graph before
+it reaches a model -- a track is split into short segments, each segment becomes a node, and
+edges connect segments that are close in time or acoustically similar. This is a reasonable
+design choice: music has real relational structure (repetition, transition, similarity
+between sections), and a graph neural network (GNN) can in principle use that structure.
+Similarity between short audio segments, computed from acoustic features and thresholded or
+visualized as a matrix, is a long-established technique for finding structure within a single
+track \cite{foote2000novelty}; this paper's graph construction applies the same underlying
+idea (pairwise segment similarity) to build a graph rather than a novelty curve. The
+message-passing GNN family
+this paper draws its encoder from includes several related architectures beyond the one used
+here -- GCN \cite{kipf2017gcn}, GAT \cite{velickovic2018gat}, and GIN \cite{xu2019gin}, in
+addition to GraphSAGE \cite{hamilton2017graphsage}. Separately, a recognized concern in the
+broader GNN literature is that graph-based models are not always compared against simpler
+baselines under matched, controlled conditions \cite{errica2020fair,shchur2018pitfalls} --
+this paper takes that concern as a direct methodological starting point, not only a
+citation.
+
+But if the edges are built directly from the same features already given to each node -- for
+instance, connecting two segments whenever their feature similarity crosses a threshold --
+then the graph's structure is, in the strict information-theoretic sense, a restatement of
+information already present in the node features, not a new observation about the track. This
+does not automatically mean such a graph is useless: a deterministic function of the features
+could still act as a useful computational shortcut or inductive bias, easing optimization
+even without adding information a sufficiently powerful model could not already extract from
+the features alone. Whether either of these possibilities -- added information, or a
+useful-but-informationless shortcut -- actually helps in practice, for a specific graph
+construction and a specific set of tasks, is an empirical question, not something to assume
+from the architecture diagram alone.
+
+This paper answers that question for one concrete system, across four tasks that share the
+same node-feature definition and the same similarity-based edge construction rule --
+though not, as Section~\ref{sec:data} discloses precisely, the same audio segmentation
+length or dataset split in every task: a text-only tag
+classifier (Task 1, no audio at all), a graph-based genre classifier compared against an
+edge-free alternative (Task 2), a graph-plus-text fusion model (Task 3), and a contrastive
+audio-text retrieval model (Task 4). Each task, on its own, answers a narrower question. Together, they
+form a single experimental ladder:
+
+\begin{itemize}
+\item \textbf{Task 1} asks how much target information language alone already provides,
+before any audio or graph is involved.
+\item \textbf{Task 2} asks whether the graph's topology helps audio-only classification
+beyond what the same node features give a structure-free model.
+\item \textbf{Task 3} asks whether the graph adds information that a strong text model does
+not already have, once both are available together.
+\item \textbf{Task 4} asks whether any graph benefit found in classification or fusion
+survives under a different objective entirely: matching audio to text by similarity, with no
+genre or tag labels -- only audio-caption pairing as supervision.
+\end{itemize}
+
+We do not set out to show that graphs are useless for music, and we do not find that. We set
+out to check, directly and with matched controls wherever they could be arranged --
+Section~\ref{sec:protocol} discloses the specific exceptions found on inspection, including
+one confound in Task 2's own training scripts -- whether \emph{this}
+similarity-based graph construction earns its place in \emph{these} tasks. Task 1 has no
+graph at all and serves as the anchor; Tasks 2--4 each include a direct graph-vs-edge-free
+comparison, and in none of the three does the graph-based model come out clearly and reliably
+ahead. Task 2's fairest (pooling-matched) comparison favors the edge-free alternative, though
+a non-learned 2-hop control complicates this (Section~\ref{sec:discussion}). Task 3's single
+standalone comparison is mixed and inconclusive, but its two follow-up diagnostics --
+branch-zeroing (an inference-time intervention on the trained fusion model, finding it relies
+on the graph branch only slightly) and complementarity (correlational,
+comparing two separately-trained single-branch models, finding almost no positive-label
+rescue by the graph-only model) -- together find the graph contributing
+little the fusion model actually ends up relying on. Task 4 shows no consistent advantage
+either way across three seeds. We report this consistency, with each result's own caveats, as
+the paper's main finding. We also check two alternative explanations that could produce this
+pattern without the graph itself being at fault -- caption text directly leaking target
+labels, and duplicate or leaked audio inflating a model's apparent score -- and report what we
+find, rather than assume either one away.

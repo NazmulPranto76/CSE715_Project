@@ -1,0 +1,33 @@
+\section{Conclusion}
+
+For similarity edges, Shannon redundancy with the node features follows analytically from
+the construction, not from any experiment. What we tested, rather than assumed, is the
+practical question -- whether this similarity-based audio graph nevertheless helps a real,
+finite model -- across four tasks spanning text-only prediction, graph-only classification,
+multimodal fusion, and cross-modal retrieval. Tasks 2 and 4 include a
+direct, test-set graph-vs-edge-free comparison; Task 3's own such comparison is
+validation-only, so its evidence instead comes from two test-set diagnostics: branch-zeroing
+inside the trained fusion model, and a cross-tabulation of independently-trained
+single-branch checkpoints. No \emph{learned-aggregation} graph-based model ever
+showed a clear advantage over its edge-free alternative, and it trailed in Task 2's
+pooling-matched reading -- a single-run difference, with GTZAN's small unresolved leakage
+caveat and no uncertainty estimate, so we call this a trailing result, not a statistically
+established loss.
+
+One qualifier matters here. Task 2's non-learned exact 2-hop control, whose aggregation is
+fixed rather than trained, does clearly beat every edge-free number -- a genuine complication,
+discussed in Section~\ref{sec:discussion}, not swept into "graph-based model" for
+convenience. Task 3's own standalone comparison was mixed and inconclusive on its own; the
+evidence for little graph reliance there instead comes from two diagnostics on the trained
+fusion model and its parts -- branch-zeroing (an inference-time intervention directly on the
+fusion model) and complementarity (correlational, comparing two separately-trained
+single-branch models) -- not
+from that standalone number. Task 4 showed no consistent advantage either way across three
+seeds; with only three runs and no formal equivalence test, that is an absence of detected
+difference, not proof of none.
+
+We report the resulting conclusion as the paper's central finding: no task in this study
+showed a clearly established graph advantage, though the supporting evidence and its strength
+differ by task and are stated precisely rather than smoothed into one uniform result.
+Presence of a graph branch in a music-understanding pipeline is not the same as demonstrated
+reliance on it -- the two should be checked separately, not assumed to go together.

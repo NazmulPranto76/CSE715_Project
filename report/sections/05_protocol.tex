@@ -1,0 +1,81 @@
+\section{Experimental Protocol}\label{sec:protocol}
+
+\textbf{Metrics.} Classification tasks (1, 2, 3) use macro-F1 as the primary metric
+throughout. Micro-F1 is also available for Task 1 and Task 2's main models, and AUC-PR for
+Task 1 and Task 3; Task 2's edge-free and 2-hop controls, evaluated for macro-F1 only, do
+not have micro-F1/AUC-PR recorded, so this paper does not report them for every model in
+every table -- only where the underlying evaluation produced them. Retrieval (Task 4) reports Recall@\{1,5,10\} in both
+directions (audio$\to$text and text$\to$audio), plus a zero-shot tag-prediction check (tag
+names embedded as text, no supervised tag training) as a sanity check that the learned space
+carries semantic content at all.
+
+\textbf{Model selection.} Every model evaluated on the held-out test set was selected by
+best validation-set score (macro-F1 for classification, average Recall@10 for retrieval)
+before that one test-set evaluation. Task 3's edge-free \textit{gnn\_only} comparison
+(Section~\ref{sec:results-t3}) is validation-only in a stricter sense than this: its training
+scripts run a fixed 20 epochs and report the peak validation macro-F1 observed across that
+run, rather than saving and restoring a selected best checkpoint -- so "best" there describes
+the reported number, not a checkpoint carried forward to any further evaluation. This
+comparison is explicitly marked validation-only wherever it is reported, not presented as a
+test-set result.
+
+\textbf{Seeds.} Task 2/3's main comparisons in Sections~\ref{sec:results-t2}--\ref{sec:results-t3}
+use a single training run each, matching the resources available for this project; this is a
+real limitation and is stated as such rather than implied to be more robust than it is. The
+deployed GraphSAGE checkpoints these comparisons are measured against were trained with a
+documented seed (42); the Task 2 exact 2-hop control script also fixes this same seed (42)
+for its Python/NumPy/PyTorch random state, so that comparison is seed-matched. The edge-free
+set-baseline scripts (Task 2 and Task 3) do not set or record an explicit seed, so those
+specific single-run contrasts are not seed-matched and are not guaranteed to be exactly
+reproducible from a fresh run -- a further reason to read the edge-free numbers specifically
+as indicative rather than precise. Task 4's graph-vs-edge-free comparison, being the paper's
+most direct causal claim, is repeated across three training seeds and reported as mean $\pm$
+standard deviation (Section~\ref{sec:results-t4}).
+
+\textbf{Fairness controls.} Every graph-vs-edge-free comparison in this paper holds node
+features, optimizer, learning rate, batch size, epoch budget, and evaluation code fixed. One
+exception, found on inspection of the training scripts rather than assumed away: Task 2's
+GraphSAGE training call does not pass its configured dropout value (0.4) through to the
+model, so it silently trains at the model class's default of 0.2, while the edge-free
+encoder is passed the configured 0.4 explicitly -- so this comparison is not dropout-matched
+as the paper's earlier drafts assumed, on top of the aggregation-operator difference
+discussed next. We disclose this rather than silently correct it after the fact (correcting
+it would mean retraining GraphSAGE and changing every Task 2 number that depends on it);
+Section~\ref{sec:cross-task} discusses what this does and does not imply for the smallest
+Task 2 gap specifically. Separately, replacing GraphSAGE layers with per-node MLP layers also
+removes the aggregation operator itself, not topology alone, so this comparison is an
+edge-free-encoder control, not a pure edge-ablation. Neither guarantee extends to Task 2's
+non-learned 2-hop control, which is not an edge-free comparison at all (it keeps the same
+topology as GraphSAGE) and uses a different training recipe for its classifier head --
+full-batch optimization, no dropout, a fixed 200-epoch budget, versus GraphSAGE's
+mini-batches and early stopping (both use the same nominal weight decay, $10^{-4}$, so that
+specific setting is not a distinguishing factor; Section~\ref{sec:discussion} discloses the
+recipe difference precisely and treats the 2-hop result accordingly, as exploratory rather
+than a controlled ablation). Section~\ref{sec:results-t2} reports a second, cleaner
+topology-only intervention (real vs.\ shuffled vs.\ random edges on the same GraphSAGE
+architecture, from a companion audit \cite{tismir_audit}) that isolates edge identity alone
+and finds the same qualitative pattern. Parameter counts are reported for Task 2's
+comparison (Table~\ref{tab:task2-full}); Task 3's edge-free encoder is also smaller than its
+GraphSAGE counterpart (9,522 vs.\ 15,666 parameters, from the same companion evidence base
+\cite{tismir_audit}), though this paper's own tables do not repeat that count for Task 3/4.
+Wherever it is reported, the edge-free alternative uses fewer parameters than its graph
+counterpart (Section~\ref{sec:results}), so no graph-vs-edge-free gap in this paper can be
+explained by the edge-free model having
+more capacity.
+
+\textbf{Class weighting.} Weighting was not held fixed across every Task 3 number, and we say
+precisely which is which rather than imply otherwise. Table~\ref{tab:task3-full}'s
+\textit{bert\_only} (0.7298), \textit{concat} (0.7061), and \textit{cross\_attention}
+(0.6951) rows are all \emph{unweighted}, so they are directly comparable to each other. The
+two \textit{gnn\_only} rows are a before/after methodology pair, not two comparable
+conditions: 0.0112 is the original unweighted run that first exposed a label-imbalance
+problem, and 0.1621 is the same setup with positive-class weighting added to fix it. The
+edge-free \textit{gnn\_only} control (0.1599 mean-pool, 0.1689 max-pool,
+Section~\ref{sec:results-t3}) uses this same positive-class weighting, matching the
+0.1621/0.1640-family comparators it is measured against, not the unweighted 0.0112 row. A
+positive-weighted \textit{cross\_attention} variant also exists separately in the evidence
+base (0.6769, lower than the unweighted 0.6951 reported here) but is not otherwise used in
+this paper's comparisons; we did not selectively omit it -- it simply answers a different
+question (does weighting change cross\_attention specifically) than Table~\ref{tab:task3-full}
+does. No positive-weighted \textit{bert\_only} or \textit{concat} run exists in the evidence
+base. Task 1 does not use positive-class weighting.

@@ -1,0 +1,89 @@
+\section{Discussion}\label{sec:discussion}
+
+\textbf{What this shows.} Across three tasks with different objectives, loss functions, and
+evaluation metrics, we could not detect a reliable benefit from this project's
+similarity-based audio graph beyond what its own node features already provide -- though the
+specific evidence differs by task, and we do not claim it is uniform. Task 2's
+pooling-matched comparison favors the edge-free encoder directly. Task 3's own standalone
+graph-vs-edge-free comparison is mixed and pooling-dependent and is \emph{not} the evidence
+we rely on there; its branch-zeroing and complementarity diagnostics, both on held-out test
+data, are what show little reliance on the graph. Task 4 shows no reliable difference across
+three seeds. Tasks 2 and 4 rely directly on width/depth-matched, lower-parameter edge-free
+controls; Task 3 also has such a control, but only at validation, so its relied-upon
+test-set evidence comes from branch-zeroing and complementarity instead, neither of which is
+an edge-free-encoder comparison. The three findings are therefore not built from one
+identical comparison type, and the paper says so at each step rather than only here.
+
+\textbf{What this does not show.} It does not show that graph neural networks are a poor
+choice for music understanding in general, or that no graph construction could help this
+kind of system. It shows that \emph{this specific} feature-induced similarity graph, applied
+to \emph{these} node features, on \emph{these} datasets, gave the model little it did not
+already have. A graph built from a genuinely external relation -- one not recomputable from
+the same features given to each node, such as annotated chord progressions, beat structure,
+or section repetition -- is not ruled out by this study and remains untested here.
+
+\textbf{Why this might be happening, and a genuine complication.} The clearest candidate
+explanation is structural: a similarity threshold applied to the same features used as node
+content produces an adjacency matrix that is, in the information-theoretic sense, redundant
+with those features (Section~\ref{sec:cross-task}). A secondary, more speculative possibility
+is that even the limited topology present is not fully exploited by the trained GraphSAGE
+model -- the broader GNN literature has separately found that trained message-passing layers
+can under-use structure through over-smoothing \cite{li2018oversmoothing}, and that a fixed
+propagation step can match or exceed a trained GCN-style layer \cite{wu2019sgc}. Table
+\ref{tab:task2-full}'s exact 2-hop result (0.6630, beating both edge-free numbers and
+GraphSAGE, not the CNN baseline at 0.7654) is a genuine complication for a "topology never
+helps" reading, reported rather than explained away -- but not as a clean ablation: the 2-hop
+pipeline uses full-batch Adam for a fixed 200 epochs and no dropout, while GraphSAGE's
+training script does not pass its configured dropout through and so trains at the model
+default of 0.2 (Section~\ref{sec:protocol} discloses this bug precisely), with mini-batches
+of 32 and early stopping over up to 100 epochs; both use the same nominal weight decay,
+$10^{-4}$. These training-recipe differences, not only whether the aggregation is learned,
+could plausibly account for some or all of the gap, so we treat it as an exploratory data
+point, not evidence that isolates topology or aggregation type on its own -- the cleaner
+topology-only evidence this paper relies on is the same-architecture real/shuffled/
+random-edge factorial from a companion audit \cite{tismir_audit} (Section~\ref{sec:results-t2},
+included alongside this paper as a supplementary manuscript, not only as an external
+citation, so its full methods and result tables are directly inspectable). We
+do not have an equivalent 2-hop control for Tasks 3 or 4, and this result is single-run
+despite sharing GraphSAGE's documented seed (42); it is also, we found while porting its
+script into this repository for reproducibility (\texttt{task2\_exact\_2hop\_control.py}),
+not exactly reproducible across environments -- an independent rerun with identical code,
+seed, and data reached 0.6551, not 0.6630, plausibly due to floating-point
+non-associativity in the two-hop aggregation's accumulation step. Both values still clearly
+exceed GraphSAGE (0.5976) and both edge-free readings (0.6049, 0.6425), so this does not
+change the qualitative finding, but it is a further, concrete reason to treat this result as
+exploratory rather than precise. We do not treat it as overturning the
+paper's overall pattern -- but it is a real, measured number that keeps this paper from
+concluding the deployed encoders extract everything the node features have to offer.
+
+\textbf{Limitations.} The caption-sanitization control (69.1\% lexical exposure, 84.3\%
+retention after retraining, Section~\ref{sec:data}) was run in an internal research
+directory outside the two codebases this paper otherwise draws from; the stored numbers were
+directly re-verified against their result files for this paper, but the training script
+itself is not included in the accompanying submission, a reproducibility gap disclosed here
+rather than left implicit. Task 2 and Task 3's main comparisons use a single training seed each;
+only Task 4's headline comparison is repeated across seeds. GTZAN carries a small,
+previously undocumented amount of exact-duplicate, cross-split leakage
+(Section~\ref{sec:data}); MusicCaps was checked clean at the ID level but not at the
+audio-content level, so two different clips of the same underlying recording, if any exist,
+would not have been caught. Neither dataset's artist-level leakage could be checked, since
+neither ships usable artist metadata. This paper uses the original, denser graph
+construction throughout (Section~\ref{sec:data}); a companion audit of the same system
+repairs this construction and finds the same qualitative pattern on the repaired graphs
+\cite{tismir_audit}, but the present paper's own four-task comparisons were not rerun on that
+repaired construction. Retrieval evaluation here treats only the one official caption as
+correct for a given clip; a semantically reasonable but unpaired clip would be scored as an
+error under this protocol. We checked this directly on 20 retrieval failures
+(Section~\ref{sec:results-t4}) and did not find evidence of a large hidden population of
+such cases -- most failures were genuine mismatches on manual inspection, with the true clip
+ranked far outside the top 10. This check used only one checkpoint, 20 non-randomly-selected
+examples (the first 20 qualifying cases in test order), and one unblinded rater with no
+predefined rubric, so it does not rule out the effect entirely, only that it is not large
+enough to be obvious on a direct look.
+
+\textbf{Why richer relations might behave differently.} A relation that is not a function of
+the node features -- for example, which segments belong to the same repeated section, or
+which two chords typically follow one another -- would fall outside the redundancy argument
+in Section~\ref{sec:cross-task} by construction, since it encodes something the feature
+vectors alone cannot recover. Testing this is a natural next step, not attempted here beyond
+the informal argument above.
