@@ -1,7 +1,7 @@
 \section{Discussion}\label{sec:discussion}
 
 \textbf{What this shows.} Across three tasks with different objectives, loss functions, and
-evaluation metrics, we could not detect a reliable benefit from this project's
+evaluation metrics, we could not detect a reliable benefit from this system's
 similarity-based audio graph beyond what its own node features already provide -- though the
 specific evidence differs by task, and we do not claim it is uniform. Task 2's
 pooling-matched comparison favors the edge-free encoder directly. Task 3's own standalone
@@ -60,7 +60,7 @@ concluding the deployed encoders extract everything the node features have to of
 retention after retraining, Section~\ref{sec:data}) was run in an internal research
 directory outside the two codebases this paper otherwise draws from; the stored numbers were
 directly re-verified against their result files for this paper, but the training script
-itself is not included in the accompanying submission, a reproducibility gap disclosed here
+itself is not included alongside this paper, a reproducibility gap disclosed here
 rather than left implicit. Task 2 and Task 3's main comparisons use a single training seed each;
 only Task 4's headline comparison is repeated across seeds. GTZAN carries a small,
 previously undocumented amount of exact-duplicate, cross-split leakage
@@ -80,6 +80,24 @@ ranked far outside the top 10. This check used only one checkpoint, 20 non-rando
 examples (the first 20 qualifying cases in test order), and one unblinded rater with no
 predefined rubric, so it does not rule out the effect entirely, only that it is not large
 enough to be obvious on a direct look.
+
+\textbf{A follow-up check that did not confirm the Task 3 finding, and why.} We reran Task
+3's branch-zeroing and complementarity diagnostics in a second, independent implementation of
+this same architecture family -- the one Task 4's own numbers are drawn from -- and did not
+get the same answer. There, removing the graph branch costs 0.12--0.17 macro-F1, not 0.0088,
+and the complementarity check finds 33--47\% genuine rescue, not 0.6\%. Both readings are real
+measurements, not a mistake in either one, so this needed an explanation rather than a choice
+of which number to believe. We found one: that implementation trains all four fusion modes,
+including \textit{gnn\_only}, with positive-class weighting, while the \textit{gnn\_only}
+checkpoint behind this section's complementarity numbers was trained without it and had
+collapsed to predicting a tag present for only 5 of its 50 tags. We checked this was not
+simply about how long training ran, by retraining the second implementation's \textit{concat}
+and \textit{gnn\_only} models for the same short number of epochs used before -- the larger
+effect was still there. We are reporting this as an open question about how sensitive this
+particular finding is to a class-weighting choice, not as a reason to doubt the branch-zeroing
+and complementarity numbers reported above, and not as evidence that the graph actually does
+help once weighted correctly -- we did not attempt to settle which weighting choice is the
+right one for this diagnostic, and leave that for further work.
 
 \textbf{Why richer relations might behave differently.} A relation that is not a function of
 the node features -- for example, which segments belong to the same repeated section, or

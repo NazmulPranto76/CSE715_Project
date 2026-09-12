@@ -19,3 +19,11 @@ logs/
 # Superseded by report/final_report.pdf -- kept locally, not pushed
 STATUS.md
 report_material/
+
+# LaTeX build artifacts -- final_report.pdf is the tracked, compiled output
+report/main.aux
+report/main.bbl
+report/main.blg
+report/main.log
+report/main.out
+report/main.pdf

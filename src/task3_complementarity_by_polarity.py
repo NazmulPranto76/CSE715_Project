@@ -1,22 +1,16 @@
 """
 task3_complementarity_by_polarity.py
 --------------------------------------
-Follow-up to task3_complementarity_diagnostic.py, prompted by a round-6
-audit finding: the gnn_only checkpoint used there has 45 of 50 tags at
-precision=recall=0 (metrics.json), i.e. it never predicts those tags
-present at all. A cell where GNN is "right" and BERT is "wrong" could mean
-two very different things:
+Follow-up to task3_complementarity_diagnostic.py: splits the
+bert_wrong_gnn_right cells by true-label polarity, to tell apart:
+  - true label = 1 (bert false negative, gnn true positive): gnn actually
+    detected something bert missed -- a genuine rescue.
+  - true label = 0 (bert false positive, gnn true negative): gnn just
+    predicted "absent" and happened to be right because bert wrongly said
+    "present" -- not evidence of audio signal detection.
 
-  - true label = 1 (BERT false negative, GNN true positive): GNN actually
-    detected something BERT missed -- a genuine rescue.
-  - true label = 0 (BERT false positive, GNN true negative): GNN just
-    predicted "absent" (its default behavior for most tags) and happened
-    to be right because BERT wrongly said "present" -- not evidence of
-    audio signal detection.
-
-This script splits the existing bert_wrong_gnn_right count by true-label
-polarity to tell these apart. Read-only, reuses the same evaluation path
-as task3_complementarity_diagnostic.py.
+Read-only. Reuses the same evaluation path as
+task3_complementarity_diagnostic.py.
 """
 
 import json
@@ -24,23 +18,45 @@ import sys
 from pathlib import Path
 
 import numpy as np
-import yaml
+import torch
+from torch.utils.data import DataLoader
 
-REPO = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+import config
+from common import get_device
+from task3_fusion import GNNBertFusion
+from datasets import FusionPairDataset, make_fusion_collate_fn
 
-from evaluate import get_outputs_for_fusion_split  # noqa: E402
+
+def get_predictions(mode, test_ds, device):
+    model = GNNBertFusion(
+        bert_model_name=config.TASK1_MODEL_NAME, gnn_in_channels=config.GRAPH_IN_CHANNELS,
+        num_labels=len(test_ds.vocab), attn_dim=config.TASK3_ATTN_DIM, mode=mode,
+    ).to(device)
+    model.load_state_dict(torch.load(config.CHECKPOINT_DIR / f"task3_fusion_{mode}_best.pt", map_location=device))
+    model.eval()
+
+    collate_fn = make_fusion_collate_fn(model.bert, max_length=config.TASK1_MAX_TEXT_LEN)
+    loader = DataLoader(test_ds, batch_size=config.TASK3_BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
+
+    all_logits, all_labels = [], []
+    with torch.no_grad():
+        for graph_batch, input_ids, attention_mask, labels in loader:
+            graph_batch = graph_batch.to(device)
+            input_ids, attention_mask = input_ids.to(device), attention_mask.to(device)
+            logits, _ = model(input_ids, attention_mask, graph_batch.x, graph_batch.edge_index, graph_batch.batch)
+            all_logits.append(logits.cpu().numpy())
+            all_labels.append(labels.numpy())
+    return np.concatenate(all_logits), np.concatenate(all_labels)
 
 
 def main():
-    cfg = yaml.safe_load((REPO / "config.yaml").read_text())
+    device = get_device()
+    test_ds = FusionPairDataset(config.SPLITS_DIR / "task34_test.json", config.SPLITS_DIR / "tag_vocab_task34.json")
 
-    bert_logits, _, labels, vocab, n = get_outputs_for_fusion_split(
-        str(REPO / "results/checkpoints/fusion_bert_only_best.pt"), cfg, "test", mode="bert_only")
-    gnn_logits, _, labels2, vocab2, n2 = get_outputs_for_fusion_split(
-        str(REPO / "results/checkpoints/fusion_gnn_only_best.pt"), cfg, "test", mode="gnn_only")
-
-    assert n == n2 and vocab == vocab2
+    bert_logits, labels = get_predictions("bert_only", test_ds, device)
+    gnn_logits, labels2 = get_predictions("gnn_only", test_ds, device)
     assert np.array_equal(labels, labels2)
 
     bert_pred = (1 / (1 + np.exp(-bert_logits)) > 0.5).astype(int)
@@ -48,14 +64,12 @@ def main():
 
     bert_correct = (bert_pred == labels)
     gnn_correct = (gnn_pred == labels)
-    rescued = ~bert_correct & gnn_correct  # BERT wrong, GNN right
+    rescued = ~bert_correct & gnn_correct
 
     is_positive = (labels == 1)
     is_negative = (labels == 0)
 
-    # Genuine rescue: true label is 1, BERT missed it (false negative), GNN caught it (true positive)
     genuine_rescue = int(np.sum(rescued & is_positive))
-    # Trivial rescue: true label is 0, BERT wrongly said present (false positive), GNN said absent (true negative)
     trivial_rescue = int(np.sum(rescued & is_negative))
     total_rescue = genuine_rescue + trivial_rescue
 
@@ -71,13 +85,11 @@ def main():
         "bert_false_positives_total": bert_false_positives,
         "genuine_rescue_rate_among_bert_false_negatives": genuine_rescue / bert_false_negatives if bert_false_negatives else None,
         "trivial_rescue_rate_among_bert_false_positives": trivial_rescue / bert_false_positives if bert_false_positives else None,
-        "note": "genuine_rescue = true label 1, BERT false negative, GNN true positive (GNN actually "
-                "detected the tag). trivial_rescue = true label 0, BERT false positive, GNN true "
-                "negative (GNN just predicted absent, its default behavior for 45/50 tags per "
-                "metrics.json's fusion_gnn_only per-tag precision/recall, both 0.0).",
+        "note": "genuine_rescue = true label 1, bert false negative, gnn true positive. "
+                "trivial_rescue = true label 0, bert false positive, gnn true negative.",
     }
     print(json.dumps(out, indent=2))
-    out_path = REPO / "results" / "graph_repair" / "task3_complementarity_by_polarity.json"
+    out_path = config.RESULTS_DIR / "task3_complementarity_by_polarity.json"
     out_path.write_text(json.dumps(out, indent=2))
     print(f"\nSaved: {out_path}")
 

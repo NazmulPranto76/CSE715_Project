@@ -2,7 +2,7 @@
 
 \subsection{Datasets and splits}
 Two datasets are used. \textbf{GTZAN} \cite{tzanetakis2002gtzan} (Task 2): 10 genres, 999
-usable 30-second clips (699/150/150 train/val/test) -- a fixed, project-specific, genre-stratified
+usable 30-second clips (699/150/150 train/val/test) -- a fixed, study-specific, genre-stratified
 split generated with a documented seed, not an official GTZAN benchmark split, used
 throughout this study.
 \textbf{MusicCaps} \cite{agostinelli2023musiclm} (Tasks 1, 3, 4): natural-language captions
@@ -88,7 +88,7 @@ showing the effect is real but not total.
 (999 of which are used across the train/val/test splits) and found \textbf{14 exact,
 byte-identical duplicate pairs} -- consistent with GTZAN's documented quality issues
 \cite{sturm2013gtzan}. Cross-checking these pairs against the train/val/test split used
-throughout this project found \textbf{7 of the 14 pairs cross a split boundary} (e.g.\ one
+throughout this paper found \textbf{7 of the 14 pairs cross a split boundary} (e.g.\ one
 copy in train, the other in test), meaning a small number of test tracks have a
 byte-identical duplicate in the training set. One duplicate pair additionally carries two
 different genre labels (\texttt{metal.00058.wav} and \texttt{rock.00016.wav} are
