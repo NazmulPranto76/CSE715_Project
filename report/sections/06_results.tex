@@ -113,10 +113,15 @@ graph embedding with zeros inside the trained \textit{concat} model changes only
 branch instead costs 0.6779 macro-F1, confirming text is overwhelmingly the informative
 branch. This 0.0088 figure comes from the primary evidence base described in
 Section~\ref{sec:data}. The accompanying repository's own
-\texttt{src/task3\_branch\_zeroing.py} reports a 0.12 macro-F1 decrease on that repository's
-own 673-example, 30-tag \textit{concat} checkpoint, not this 0.0088 -- despite sharing this
-script's name, it runs against a different implementation, different data, and a differently
-trained checkpoint, as part of a disclosed follow-up check that did not confirm this reading
+\texttt{src/task3\_branch\_zeroing.py} instead reports a 0.1205 macro-F1 decrease (archived at
+\texttt{results/task3\_branch\_zeroing.json}), computed against a \textit{concat} checkpoint
+that repository's own \texttt{task3\_train.py} produced on its 673-example, 30-tag split --
+a trained artifact, like this paper's other checkpoints, not itself shipped in the
+repository, so this is a reported measurement rather than something a fresh clone can rerun
+without first retraining, and retraining is not guaranteed to reproduce 0.1205 exactly given
+the non-determinism Section~\ref{sec:discussion} discloses. Despite sharing this script's
+name, it runs against a different implementation, different data, and a differently trained
+checkpoint, as part of a disclosed follow-up check that did not confirm this reading
 (Section~\ref{sec:discussion}) -- the two numbers are not interchangeable, and we name this
 explicitly rather than let the shared filename imply they are.
 \textbf{Complementarity}: cross-tabulating \textit{bert\_only} against

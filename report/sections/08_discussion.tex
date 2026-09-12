@@ -46,11 +46,13 @@ default of 0.2 (Section~\ref{sec:protocol} discloses this bug precisely), with m
 of 32 and early stopping over up to 100 epochs; both use the same nominal weight decay,
 $10^{-4}$. These training-recipe differences, not only whether the aggregation is learned,
 could plausibly account for some or all of the gap, so we treat it as an exploratory data
-point, not evidence that isolates topology or aggregation type on its own -- the cleaner
-topology-only evidence this paper relies on is the same-architecture real/shuffled/
-random-edge factorial from a companion audit \cite{tismir_audit} (Section~\ref{sec:results-t2}),
-cited here rather than reproduced in full; its full methods and result tables are not
-included alongside this paper. We
+point, not evidence that isolates topology or aggregation type on its own -- a cleaner,
+topology-only result exists in a companion audit \cite{tismir_audit}
+(Section~\ref{sec:results-t2}), a same-architecture real/shuffled/random-edge factorial, but
+we flag rather than lean on it as settled support: it is an unpublished, anonymized-for-review
+manuscript with no stable public identifier at the time of writing, cited here rather than
+reproduced in full, and its full methods and result tables are not included alongside this
+paper or independently inspectable by a reader of this one. We
 do not have an equivalent 2-hop control for Tasks 3 or 4, and this result is single-run
 despite sharing GraphSAGE's documented seed (42); it is also, we found while porting its
 script into this repository for reproducibility (\texttt{task2\_exact\_2hop\_control.py}),
@@ -65,7 +67,7 @@ concluding the deployed encoders extract everything the node features have to of
 
 \textbf{Limitations.} The caption-sanitization control (69.1\% lexical exposure, 84.3\%
 retention after retraining, Section~\ref{sec:data}) was run in an internal research
-directory outside the two codebases this paper otherwise draws from; the stored numbers were
+directory outside the two implementations this paper otherwise draws from; the stored numbers were
 directly re-verified against their result files for this paper, but the training script
 itself is not included alongside this paper, a reproducibility gap disclosed here
 rather than left implicit. Task 2 and Task 3's main comparisons use a single training seed each;
@@ -95,8 +97,8 @@ are drawn from -- and did not get the same answer. There, removing the graph bra
 0.12 macro-F1 at that implementation's own epoch budget and 0.1672 macro-F1 when retrained at
 the shorter epoch budget used before (a single archived run of that shorter-budget control; we
 did not force deterministic training, so, in the same vein as Table~\ref{tab:task2-full}'s
-2-hop result above, an exact rerun could land at a different value, though we would not expect
-the qualitative pattern -- a larger effect than this section's 0.0088 -- to reverse); the
+2-hop result above, an exact rerun could land at a different value; no additional runs were
+archived to quantify that variability); the
 complementarity check finds 169 of 359 rescued cells (47.1\%) genuine at the longer budget and
 142 of 427 (33.3\%) at the shorter one, both well above the 3 of 508 (0.6\%) reported above.
 Both readings are real measurements, not a mistake in either one, so this needed an
@@ -109,11 +111,14 @@ is class weighting: unlike the checkpoint behind this section's complementarity 
 \textit{gnn\_only}, with positive-class weighting throughout. We have not isolated weighting
 as the cause, though: the two implementations also differ in split size, tag vocabulary
 (50 tags here, 30 there), and segment length, and we did not run a weighted-versus-unweighted
-comparison within one implementation to separate weighting from these other differences. What
-the second implementation's numbers do show is that its trained model relies on its graph
-branch more than this section's does; they do not show that graph topology specifically, as
-opposed to the extra node-level information the branch carries, is what it relies on, since
-branch-zeroing does not separate the two. We report this as an open, only partly explained
+comparison within one implementation to separate weighting from these other differences. In
+the second implementation, branch-zeroing found substantially greater fusion-model reliance
+on the graph branch than this section's own number, and complementarity found substantially
+more genuine positive-label rescue by its independently-trained graph-only model; neither
+result isolates graph topology specifically, as opposed to the extra node-level information
+the branch carries, since branch-zeroing does not separate the two and complementarity is a
+statement about that separate model, not about the fusion model's own behavior. We report
+this as an open, only partly explained
 disagreement between two implementations of the same task, not as a correction to the
 numbers reported above and not as evidence that the graph helps once weighted correctly.
 

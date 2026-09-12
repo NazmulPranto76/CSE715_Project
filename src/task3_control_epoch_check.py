@@ -5,7 +5,7 @@ One-off diagnostic (not part of the pipeline): isolates whether today's
 Task 3 branch-zeroing/complementarity swing is caused by the extra epochs
 (10 -> 25) or by something that was already true at the old 10-epoch
 budget (e.g. this repo's uniform positive-class weighting, which the other
-codebase did not use for its gnn_only complementarity checkpoint).
+implementation did not use for its gnn_only complementarity checkpoint).
 
 Trains bert_only, gnn_only, and concat for exactly 10 epochs (the OLD
 budget) to separate "_ctrl10" checkpoint files, without touching the real

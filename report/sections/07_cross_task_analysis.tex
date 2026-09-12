@@ -67,9 +67,10 @@ quantity: complementarity speaks to whether the independently-trained graph-only
 tags text misses (it largely does not), while branch-zeroing speaks to the trained fusion
 model's own reliance on the graph branch (slight, but real, and not topology-specific). We
 read them together only as pointing in the same direction in this evidence base, not as
-converging on one number -- and Section~\ref{sec:discussion} reports that a second
-implementation, applying both diagnostics to its own checkpoints, found substantially more
-reliance, an unresolved disagreement we do not paper over here.
+converging on one number -- and Section~\ref{sec:discussion} reports that in a second
+implementation, branch-zeroing found substantially greater fusion-model reliance and
+complementarity found substantially more genuine rescue by its own graph-only model, an
+unresolved disagreement we do not paper over here.
 
 \textbf{Text dominance and graph weakness are separate findings, not one explanation for the
 other.} Caption text leaks a substantial fraction of target labels directly (69.1\%

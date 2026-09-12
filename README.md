@@ -66,18 +66,20 @@ project_submission_simple/
   report/                         <- the final report (LaTeX source + final_report.pdf)
 ```
 
-**A note on the diagnostic scripts above the `scripts/` line.** Most of them run fine from
-this repo against this repo's own checkpoints, including `task3_branch_zeroing.py`,
+**A note on the diagnostic scripts above the `scripts/` line.** All of them run end-to-end
+against this repo's own data and, where relevant, its own checkpoints: `task3_branch_zeroing.py`,
 `task3_complementarity_diagnostic.py`, `task3_complementarity_by_polarity.py`, and
-`task3_control_epoch_check.py` -- these compute this repo's *own* Task 3 numbers, which
+`task3_control_epoch_check.py` compute this repo's *own* Task 3 numbers, which
 `report/final_report.pdf`'s Discussion section reports as a follow-up check that disagreed
-with its primary Task 3 finding (see that section for why). Two scripts,
-`task2_exact_2hop_control.py` and `gtzan_duplicate_audit.py`, were written against a second,
-larger research codebase's config format, data splits, and checkpoints (the one
-`report/final_report.pdf` reports its *primary* Task 1-3 numbers from) -- they're included
-here for direct inspection and because the report cites them, but running them end-to-end
-needs that other codebase's `config.yaml`, `data/splits/`, and `results/checkpoints/`, not
-just what ships here.
+with its primary Task 3 finding (see that section for why). `task2_exact_2hop_control.py`
+and `gtzan_duplicate_audit.py` reproduce the Task 2 exact-2-hop control and the GTZAN
+duplicate/leakage audit that `report/final_report.pdf` cites, using this repo's own GTZAN
+splits directly; `gtzan_duplicate_audit.py` additionally needs the raw GTZAN audio described
+under Datasets below (not shipped, same as Task 2 training). Note that
+`report/final_report.pdf`'s own *headline* Task 1-3 numbers come from a separate, larger-scale
+run at a bigger data size than this repo trains at (Section 2 of the report explains that
+distinction) -- these two scripts reproduce the specific cited diagnostic results, not that
+larger-scale run's main table.
 
 ## 2. Datasets
 
@@ -172,12 +174,12 @@ epochs respectively -- see `config.py`'s `TASK1_EPOCHS`/`TASK3_EPOCHS` comments)
 Task 4 were left as-is; their validation curves had already plateaued. Note that even at this
 larger budget, BERT alone (0.787) still beats both fusion modes (0.777, 0.760) here, and the
 graph-only model badly underperforms (0.187) -- the same qualitative pattern
-`report/final_report.pdf` reports from the other codebase, now also visible in this repo's
+`report/final_report.pdf` reports at its larger data scale, now also visible in this repo's
 own, independently-trained numbers.
 
 This table is this repo's own Task 1-4 pipeline, at its own (smaller) data scale --
-`report/final_report.pdf` reports different, larger-scale numbers for Tasks 1-3 from a
-separate codebase (see the note above), and is the source to cite for the actual findings,
+`report/final_report.pdf` reports different, larger-scale numbers for Tasks 1-3 (see the note
+above), and is the source to cite for the actual findings,
 including the direct test of whether the graph branch matters at all in Tasks 2/3/4: not
 detectably for Task 2 or Task 4, but Task 3 is unresolved -- this repo's own branch-zeroing
 and complementarity checks (`task3_branch_zeroing.py`,

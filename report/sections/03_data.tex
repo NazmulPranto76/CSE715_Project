@@ -19,16 +19,17 @@ or one segment length throughout: Task 1 uses the caption-only 3,523/755/756 spl
 no audio segmentation at all; Task 2 uses GTZAN with 2-second segments; Task 3 uses MusicCaps
 with 1-second segments and the audio-paired 3,287/704/715 split (50-tag vocabulary). Task 4
 was built and run separately, in a second, independent implementation of the same
-architecture family (2-second MusicCaps segments; a 3,136/673/673 split, this second
-implementation's own cached-audio subset, expanded by merging in additional audio it had
-separately cached -- unrelated to the primary evidence base's own, larger split above; and a
-30-tag vocabulary for its own zero-shot sanity check). Both
+architecture family (2-second MusicCaps segments; a 3,136/673/673 split assembled
+independently from this implementation's own audio cache, rather than by augmenting the
+primary evidence base's 3,287/704/715 split above -- possible clip overlap between the two
+independently assembled subsets was not measured; and a 30-tag vocabulary for its own
+zero-shot sanity check). Both
 implementations share the same node-feature
 definition, similarity-graph rule, and encoder architectures (Section~\ref{sec:models}), and
 the paper's cross-task argument (Section~\ref{sec:cross-task}) does not depend on the exact
 segment length or split size being identical -- but the two are not byte-for-byte the same
-pipeline, and we say so plainly rather than imply a single shared codebase produced all four
-tasks' numbers.
+pipeline, and we say so plainly rather than imply a single shared implementation produced all
+four tasks' numbers.
 
 \subsection{Audio segmentation and node features}
 Task 1 uses no audio at all -- text only. Where audio is used (Tasks 2--4), each track is

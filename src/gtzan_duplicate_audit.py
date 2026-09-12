@@ -19,7 +19,7 @@ REPO = Path(__file__).resolve().parent.parent
 
 
 def main():
-    audio_dir = REPO / "data" / "raw" / "gtzan" / "Data" / "genres_original"
+    audio_dir = REPO / "data" / "raw" / "gtzan" / "genres_original"
     files = sorted(audio_dir.rglob("*.wav")) + sorted(audio_dir.rglob("*.au"))
     print(f"GTZAN audio files found: {len(files)}")
 
@@ -77,8 +77,7 @@ def main():
         "test_tracks_with_a_train_duplicate": sorted(test_tracks_with_train_duplicate),
         "pairs": rows,
     }
-    out_path = REPO / "results" / "graph_repair" / "gtzan_duplicate_audit.json"
-    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path = REPO / "results" / "gtzan_duplicate_audit.json"
     out_path.write_text(json.dumps(out, indent=2))
     print(f"\n{len(test_tracks_with_train_duplicate)} of 150 test tracks have an exact "
           f"duplicate in the training set.")

@@ -1,13 +1,10 @@
 """
 task2_exact_2hop_control.py
 ------------------------------
-Reproduces, from this canonical codebase, the exact 2-hop neighbor
-aggregation control the four-task paper cites for Task 2 -- previously
-only available as project/caps-gi/src/test_1a_exact_precompute.py (flagged
-by a round-7 audit as a reproducibility gap: the number was real, but not
-reproducible from either codebase named as this paper's evidence base).
-Ported here unchanged in method, ordered here to make the control
-independently re-derivable from this repository.
+Computes, from this repository's own GTZAN data and splits, the exact
+2-hop neighbor aggregation control the four-task paper cites for Task 2:
+a non-learned, precomputed neighborhood aggregate compared directly
+against this repository's GraphSAGE and CNN baseline numbers.
 
 Question: does GTZAN genre classification need learned message passing, or
 does an EXACT (non-learned, non-sketched) precomputed neighborhood
@@ -154,7 +151,7 @@ def main():
         "note": "cited from results/metrics.json's cnn_baseline entry, not retrained here",
     }
 
-    out_path = REPO / "results" / "graph_repair" / "task2_exact_2hop_control.json"
+    out_path = REPO / "results" / "task2_exact_2hop_control.json"
     out_path.write_text(json.dumps(results, indent=2))
     print(f"\nSaved -> {out_path}")
 
